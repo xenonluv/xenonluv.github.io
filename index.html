@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEWJIN | Real-Time Quant Intelligence</title>
+  <meta name="description" content="뉴진은 장중 데이터를 실시간으로 해석해 행동 가능한 시장 인텔리전스로 전환하는 AI 퀀트 엔진 회사입니다.">
+  <meta property="og:title" content="NEWJIN | Real-Time Quant Intelligence">
+  <meta property="og:description" content="A quant company designed for real-time markets.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://xenonluv.github.io">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap');
+
+    :root {
+      --bg: #f5f0e8;
+      --paper: rgba(255, 252, 247, 0.76);
+      --navy: #0f1728;
+      --ink: #182235;
+      --muted: #5f6777;
+      --line: rgba(15, 23, 40, 0.12);
+      --bronze: #b07a44;
+      --teal: #1f5f66;
+      --shadow: 0 18px 60px rgba(15, 23, 40, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 18%, rgba(176, 122, 68, 0.16), transparent 28%),
+        radial-gradient(circle at 88% 15%, rgba(31, 95, 102, 0.12), transparent 26%),
+        linear-gradient(180deg, #f8f2ea 0%, #f4ede3 44%, #efe5d6 100%);
+      font-family: "Space Grotesk", sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(15, 23, 40, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 23, 40, 0.03) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: radial-gradient(circle at center, black 45%, transparent 90%);
+      pointer-events: none;
+      opacity: 0.35;
+    }
+
+    .font-display { font-family: "Cormorant Garamond", serif; }
+    .shell {
+      position: relative;
+      width: min(1240px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+    .panel {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      border: 1px solid rgba(15, 23, 40, 0.16);
+      background: rgba(255, 255, 255, 0.45);
+      padding: 0.5rem 0.85rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .eyebrow::before {
+      content: "";
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--bronze), var(--teal));
+      box-shadow: 0 0 0 6px rgba(176, 122, 68, 0.12);
+    }
+    .headline {
+      font-size: clamp(3.8rem, 8vw, 7.2rem);
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+    }
+    .subhead {
+      max-width: 38rem;
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      line-height: 1.8;
+      color: var(--muted);
+    }
+    .cta-primary,
+    .cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      border-radius: 999px;
+      padding: 0.95rem 1.35rem;
+      font-size: 0.92rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+    .cta-primary {
+      background: linear-gradient(135deg, var(--navy), #1f3552);
+      color: #f8f4ee;
+      box-shadow: 0 18px 32px rgba(15, 23, 40, 0.18);
+    }
+    .cta-secondary {
+      border: 1px solid rgba(15, 23, 40, 0.14);
+      color: var(--navy);
+      background: rgba(255,255,255,0.48);
+    }
+    .cta-primary:hover,
+    .cta-secondary:hover { transform: translateY(-2px); }
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1;
+      letter-spacing: -0.045em;
+    }
+    .section-copy {
+      font-size: 1.02rem;
+      line-height: 1.85;
+      color: var(--muted);
+    }
+    .quant-orb {
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(6px);
+      opacity: 0.88;
+      animation: drift 11s ease-in-out infinite;
+    }
+    .orb-a {
+      width: 180px;
+      height: 180px;
+      right: 12%;
+      top: 2%;
+      background: radial-gradient(circle at 30% 30%, rgba(176, 122, 68, 0.82), rgba(176, 122, 68, 0.04));
+    }
+    .orb-b {
+      width: 240px;
+      height: 240px;
+      left: -5%;
+      bottom: 18%;
+      background: radial-gradient(circle at 35% 35%, rgba(31, 95, 102, 0.42), rgba(31, 95, 102, 0.03));
+      animation-duration: 15s;
+    }
+    .market-frame {
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      border: 1px solid rgba(15, 23, 40, 0.12);
+      background:
+        radial-gradient(circle at 20% 10%, rgba(176, 122, 68, 0.14), transparent 28%),
+        linear-gradient(160deg, rgba(15, 23, 40, 0.98), rgba(18, 31, 52, 0.92));
+      color: #edf2f7;
+      box-shadow: 0 32px 70px rgba(15, 23, 40, 0.24);
+    }
+    .market-frame::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 34px 34px;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+    .signal-line {
+      display: grid;
+      grid-template-columns: 54px 1fr auto;
+      gap: 0.8rem;
+      align-items: center;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 0.9rem 1rem;
+      background: rgba(255,255,255,0.04);
+    }
+    .signal-line.top {
+      background: linear-gradient(90deg, rgba(176, 122, 68, 0.18), rgba(31, 95, 102, 0.06));
+      border-color: rgba(255, 215, 163, 0.18);
+    }
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    .metric-card {
+      min-height: 170px;
+      border-radius: 24px;
+      padding: 1.35rem;
+      border: 1px solid rgba(15, 23, 40, 0.1);
+      background: linear-gradient(180deg, rgba(255,255,255,0.86), rgba(245,239,232,0.86));
+    }
+    .ticker-strip {
+      overflow: hidden;
+      white-space: nowrap;
+      border-top: 1px solid rgba(15, 23, 40, 0.08);
+      border-bottom: 1px solid rgba(15, 23, 40, 0.08);
+      background: rgba(255,255,255,0.38);
+    }
+    .ticker-track {
+      display: inline-flex;
+      gap: 2rem;
+      padding: 1rem 0;
+      min-width: max-content;
+      animation: ticker 26s linear infinite;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .reveal { animation: rise 780ms ease both; }
+    .reveal-slow { animation-delay: 120ms; }
+    .reveal-late { animation-delay: 240ms; }
+    @keyframes drift {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(0, -18px, 0) scale(1.04); }
+    }
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(22px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 960px) {
+      .metric-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="quant-orb orb-a"></div>
+  <div class="quant-orb orb-b"></div>
+
+  <header class="shell pt-6 md:pt-8">
+    <div class="panel rounded-[28px] px-5 py-4 md:px-8 md:py-5">
+      <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div class="flex items-center gap-4">
+          <div class="h-11 w-11 rounded-full border border-[rgba(15,23,40,0.14)] bg-[linear-gradient(135deg,#10203a,#24496d)]"></div>
+          <div>
+            <div class="text-[11px] font-bold uppercase tracking-[0.28em] text-[var(--muted)]">NEWJIN</div>
+            <div class="text-sm font-medium text-[var(--ink)]">Real-Time Quant Intelligence Company</div>
+          </div>
+        </div>
+        <nav class="flex flex-wrap items-center gap-3 text-[12px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">
+          <a href="#thesis" class="transition hover:text-[var(--navy)]">Thesis</a>
+          <a href="#platform" class="transition hover:text-[var(--navy)]">Platform</a>
+          <a href="#advantage" class="transition hover:text-[var(--navy)]">Advantage</a>
+          <a href="http://3.37.70.86:3000/" class="rounded-full border border-[rgba(15,23,40,0.14)] px-4 py-2 text-[var(--navy)] transition hover:border-[var(--bronze)] hover:text-[var(--bronze)]">Live Demo</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell pb-14 pt-8 md:pb-20 md:pt-12">
+    <section class="grid items-center gap-10 md:grid-cols-[1.08fr_0.92fr]">
+      <div class="reveal">
+        <span class="eyebrow">AI Quant Intelligence</span>
+        <h1 class="headline font-display mt-5 text-[var(--navy)]">
+          A Quant Firm
+          <span class="block text-[var(--bronze)]">Designed for</span>
+          Real-Time Markets.
+        </h1>
+        <p class="subhead mt-6">
+          뉴진은 장중 데이터를 단순히 보여주는 도구가 아니라, 거래대금·변동성·우선순위·감시 흐름을 실시간으로 해석해
+          행동 가능한 시장 인텔리전스로 전환하는 AI 퀀트 엔진 회사입니다.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a class="cta-primary" href="http://3.37.70.86:3000/">라이브 엔진 보기</a>
+          <a class="cta-secondary" href="#thesis">투자 포인트 보기</a>
+        </div>
+        <div class="mt-8 grid gap-4 md:grid-cols-3">
+          <div>
+            <div class="text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--muted)]">Positioning</div>
+            <div class="mt-2 text-lg font-bold text-[var(--navy)]">Execution-Aware AI</div>
+          </div>
+          <div>
+            <div class="text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--muted)]">Focus</div>
+            <div class="mt-2 text-lg font-bold text-[var(--navy)]">Signal Prioritization</div>
+          </div>
+          <div>
+            <div class="text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--muted)]">Mode</div>
+            <div class="mt-2 text-lg font-bold text-[var(--navy)]">Live Market Intelligence</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-slow">
+        <div class="market-frame p-5 md:p-6">
+          <div class="flex items-center justify-between border-b border-white/10 pb-4">
+            <div>
+              <div class="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-400">Live Engine Preview</div>
+              <div class="mt-2 text-2xl font-semibold text-white">NEWJIN Market Stack</div>
+            </div>
+            <div class="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-emerald-300">
+              Active
+            </div>
+          </div>
+          <div class="mt-5 grid gap-3">
+            <div class="signal-line top">
+              <div class="text-center text-2xl font-black text-white">01</div>
+              <div>
+                <div class="text-sm font-bold text-white">Signal Prioritization Engine</div>
+                <div class="mt-1 text-xs text-slate-400">거래대금, 랭킹, 강도, 지속성을 조합해 먼저 봐야 할 종목을 정렬</div>
+              </div>
+              <div class="text-right">
+                <div class="text-xs uppercase tracking-[0.16em] text-slate-500">Mode</div>
+                <div class="text-sm font-bold text-amber-200">Ranked Live</div>
+              </div>
+            </div>
+            <div class="signal-line">
+              <div class="text-center text-2xl font-black text-white">02</div>
+              <div>
+                <div class="text-sm font-bold text-white">Execution-Aware Monitoring</div>
+                <div class="mt-1 text-xs text-slate-400">실시간 감시 흐름과 사이클 구조를 통해 실제 행동 가능한 상태만 유지</div>
+              </div>
+              <div class="text-right">
+                <div class="text-xs uppercase tracking-[0.16em] text-slate-500">Latency</div>
+                <div class="text-sm font-bold text-teal-200">Cycle-Based</div>
+              </div>
+            </div>
+            <div class="signal-line">
+              <div class="text-center text-2xl font-black text-white">03</div>
+              <div>
+                <div class="text-sm font-bold text-white">Transparent Decision Trace</div>
+                <div class="mt-1 text-xs text-slate-400">엔진 상태, 감시 단계, 주문 흐름, 예외 로그까지 추적 가능한 구조</div>
+              </div>
+              <div class="text-right">
+                <div class="text-xs uppercase tracking-[0.16em] text-slate-500">Audit</div>
+                <div class="text-sm font-bold text-slate-200">Structured Logs</div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-5 grid gap-3 md:grid-cols-3">
+            <div class="rounded-2xl border border-white/8 bg-white/4 p-4">
+              <div class="text-[11px] uppercase tracking-[0.22em] text-slate-500">Engine View</div>
+              <div class="mt-2 text-3xl font-bold text-white">Live</div>
+            </div>
+            <div class="rounded-2xl border border-white/8 bg-white/4 p-4">
+              <div class="text-[11px] uppercase tracking-[0.22em] text-slate-500">Decision Layer</div>
+              <div class="mt-2 text-3xl font-bold text-white">Scored</div>
+            </div>
+            <div class="rounded-2xl border border-white/8 bg-white/4 p-4">
+              <div class="text-[11px] uppercase tracking-[0.22em] text-slate-500">Operating Model</div>
+              <div class="mt-2 text-3xl font-bold text-white">Cycle</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ticker-strip mt-10 md:mt-14">
+      <div class="ticker-track">
+        <span>REAL-TIME SIGNAL PRIORITIZATION</span>
+        <span>EXECUTION-AWARE MONITORING</span>
+        <span>TRANSPARENT DECISION TRACE</span>
+        <span>LIVE QUANT INTELLIGENCE</span>
+        <span>REAL-TIME SIGNAL PRIORITIZATION</span>
+        <span>EXECUTION-AWARE MONITORING</span>
+        <span>TRANSPARENT DECISION TRACE</span>
+        <span>LIVE QUANT INTELLIGENCE</span>
+      </div>
+    </section>
+
+    <section id="thesis" class="mt-14 md:mt-20">
+      <div class="grid gap-6 md:grid-cols-[0.82fr_1.18fr] md:items-end">
+        <div class="reveal reveal-late">
+          <span class="eyebrow">Investment Thesis</span>
+          <h2 class="section-title font-display mt-4 text-[var(--navy)]">From market noise to institutional-grade priority.</h2>
+        </div>
+        <p class="section-copy">
+          시장은 데이터가 부족한 곳이 아니라, 해석 우선순위가 무너진 곳입니다. 뉴진은 개인과 기관 사이의 차이를
+          데이터 접근이 아니라 해석 구조의 차이로 봅니다. 그래서 우리는 차트를 더 많이 보여주는 대신, 지금 무엇을 먼저 읽고
+          무엇을 버릴지를 결정하는 실시간 퀀트 인텔리전스 레이어를 만듭니다.
+        </p>
+      </div>
+
+      <div class="metric-grid mt-8">
+        <article class="metric-card reveal">
+          <div class="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--muted)]">Problem</div>
+          <div class="font-display mt-4 text-4xl text-[var(--navy)]">Information exists. Prioritization does not.</div>
+          <p class="mt-4 text-sm leading-7 text-[var(--muted)]">
+            투자자는 데이터를 보지만, 어떤 신호가 실제 행동으로 이어질 만큼 강한지 즉시 구분하지 못합니다.
+          </p>
+        </article>
+        <article class="metric-card reveal reveal-slow">
+          <div class="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--muted)]">Solution</div>
+          <div class="font-display mt-4 text-4xl text-[var(--navy)]">Rank the market like an operating system.</div>
+          <p class="mt-4 text-sm leading-7 text-[var(--muted)]">
+            뉴진은 시장을 단순 목록이 아니라 실시간 우선순위 체계로 재구성해 의사결정 속도를 높입니다.
+          </p>
+        </article>
+        <article class="metric-card reveal reveal-late">
+          <div class="text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--muted)]">Outcome</div>
+          <div class="font-display mt-4 text-4xl text-[var(--navy)]">A live intelligence company, not a chart site.</div>
+          <p class="mt-4 text-sm leading-7 text-[var(--muted)]">
+            제품의 본질은 화면이 아니라 엔진입니다. 랜딩은 회사처럼, 데모는 실시간으로, 구조는 확장 가능하게 설계합니다.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="platform" class="mt-16 grid gap-6 md:mt-24 md:grid-cols-[1fr_1fr]">
+      <div class="panel rounded-[28px] p-6 md:p-8">
+        <span class="eyebrow">Platform Architecture</span>
+        <h2 class="section-title font-display mt-4 text-[var(--navy)]">Five layers of quant interpretation.</h2>
+        <div class="mt-8 space-y-5">
+          <div>
+            <div class="text-sm font-bold uppercase tracking-[0.16em] text-[var(--bronze)]">01 Market Sensing</div>
+            <p class="mt-2 text-sm leading-7 text-[var(--muted)]">장중 데이터, 랭킹, 거래대금 흐름을 수집해 원시 상태를 정리합니다.</p>
+          </div>
+          <div>
+            <div class="text-sm font-bold uppercase tracking-[0.16em] text-[var(--bronze)]">02 Signal Scoring</div>
+            <p class="mt-2 text-sm leading-7 text-[var(--muted)]">후보를 단순 노출이 아니라 해석 가능한 우선순위로 점수화합니다.</p>
+          </div>
+          <div>
+            <div class="text-sm font-bold uppercase tracking-[0.16em] text-[var(--bronze)]">03 Watch Intelligence</div>
+            <p class="mt-2 text-sm leading-7 text-[var(--muted)]">지연 진입, 감시 단계, 우선순위 유지 여부를 실시간으로 판단합니다.</p>
+          </div>
+          <div>
+            <div class="text-sm font-bold uppercase tracking-[0.16em] text-[var(--bronze)]">04 Execution Layer</div>
+            <p class="mt-2 text-sm leading-7 text-[var(--muted)]">실제 체결 환경을 의식한 실행 중심 구조로 엔진을 운영합니다.</p>
+          </div>
+          <div>
+            <div class="text-sm font-bold uppercase tracking-[0.16em] text-[var(--bronze)]">05 Live Monitoring</div>
+            <p class="mt-2 text-sm leading-7 text-[var(--muted)]">사이클, 상태, 주문, 로그까지 엔진 동작을 추적 가능한 형태로 노출합니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel rounded-[28px] p-6 md:p-8">
+        <span class="eyebrow">Business View</span>
+        <h2 class="section-title font-display mt-4 text-[var(--navy)]">A platform that can monetize in multiple layers.</h2>
+        <div class="mt-8 grid gap-4">
+          <div class="rounded-[22px] border border-[rgba(15,23,40,0.08)] bg-white/50 p-5">
+            <div class="text-sm font-bold uppercase tracking-[0.16em] text-[var(--teal)]">B2C Premium</div>
+            <p class="mt-2 text-sm leading-7 text-[var(--muted)]">실시간 신호, 우선순위 랭킹, 상태 추적을 개인용 프리미엄 구독으로 제공할 수 있습니다.</p>
+          </div>
+          <div class="rounded-[22px] border border-[rgba(15,23,40,0.08)] bg-white/50 p-5">
+            <div class="text-sm font-bold uppercase tracking-[0.16em] text-[var(--teal)]">B2B Intelligence</div>
+            <p class="mt-2 text-sm leading-7 text-[var(--muted)]">시장 해석 엔진을 API 또는 화이트라벨 솔루션으로 확장할 수 있습니다.</p>
+          </div>
+          <div class="rounded-[22px] border border-[rgba(15,23,40,0.08)] bg-white/50 p-5">
+            <div class="text-sm font-bold uppercase tracking-[0.16em] text-[var(--teal)]">Media / IR / Education</div>
+            <p class="mt-2 text-sm leading-7 text-[var(--muted)]">보이는 대시보드는 단순한 부가물이며, 핵심 자산은 해석 엔진과 데이터 구조입니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="advantage" class="mt-16 md:mt-24">
+      <div class="panel overflow-hidden rounded-[28px]">
+        <div class="grid md:grid-cols-[0.88fr_1.12fr]">
+          <div class="bg-[linear-gradient(145deg,#13233b,#18304f)] p-7 text-slate-100 md:p-10">
+            <div class="text-[11px] font-bold uppercase tracking-[0.22em] text-slate-400">Why Newjin</div>
+            <h2 class="font-display mt-4 text-5xl leading-none text-white">Designed to feel like a serious quant company.</h2>
+            <p class="mt-6 text-sm leading-7 text-slate-300">
+              첫 페이지는 회사를 소개하고, 두 번째 페이지는 실제 엔진을 증명합니다. 이 분리는 공모 심사, IR, 데모,
+              제품 신뢰감을 동시에 잡기 위한 의도적인 구조입니다.
+            </p>
+          </div>
+          <div class="grid gap-px bg-[rgba(15,23,40,0.08)] md:grid-cols-2">
+            <div class="bg-[rgba(255,255,255,0.78)] p-6">
+              <div class="text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">Trust</div>
+              <p class="mt-3 text-sm leading-7 text-[var(--muted)]">실제 동작 중인 엔진과 구조적 로그를 함께 보여주는 방식으로 말보다 증명을 앞세웁니다.</p>
+            </div>
+            <div class="bg-[rgba(255,255,255,0.78)] p-6">
+              <div class="text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">Narrative</div>
+              <p class="mt-3 text-sm leading-7 text-[var(--muted)]">차트 사이트가 아니라, 실시간 해석 회사를 보여주는 메시지로 브랜드 무게감을 만듭니다.</p>
+            </div>
+            <div class="bg-[rgba(255,255,255,0.78)] p-6">
+              <div class="text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">Demo Flow</div>
+              <p class="mt-3 text-sm leading-7 text-[var(--muted)]">랜딩에서 설득하고, 라이브 엔진에서 확인시키는 2단 흐름이 가장 안전하고 강합니다.</p>
+            </div>
+            <div class="bg-[rgba(255,255,255,0.78)] p-6">
+              <div class="text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">Scalability</div>
+              <p class="mt-3 text-sm leading-7 text-[var(--muted)]">현재는 랭킹 데모지만, 구조는 신호 인텔리전스 회사로 확장되는 방향을 보여줍니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-16 md:mt-24">
+      <div class="panel rounded-[30px] px-6 py-8 md:px-10 md:py-12">
+        <div class="grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
+          <div>
+            <span class="eyebrow">Live Access</span>
+            <h2 class="section-title font-display mt-4 text-[var(--navy)]">See the live engine behind the narrative.</h2>
+            <p class="section-copy mt-4 max-w-3xl">
+              회사 소개가 첫인상을 만들고, 실시간 엔진이 신뢰를 완성합니다. 아래 버튼은 현재 동작 중인 라이브 엔진 화면으로
+              연결되며, 랭킹·감시·포지션·사이클 상태를 그대로 확인할 수 있습니다.
+            </p>
+          </div>
+          <div class="flex flex-col gap-3 sm:flex-row">
+            <a class="cta-primary" href="http://3.37.70.86:3000/">라이브 엔진 열기</a>
+            <a class="cta-secondary" href="#" onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;">맨 위로</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
