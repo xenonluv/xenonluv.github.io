@@ -26,6 +26,7 @@
       color: var(--text-main);
       font-family: 'Inter', sans-serif;
       overflow-x: hidden;
+      position: relative;
     }
 
     body::before {
@@ -34,11 +35,187 @@
       top: 0; left: 0; right: 0; bottom: 0;
       background: radial-gradient(circle at 50% 0%, var(--teal-glow) 0%, transparent 50%),
                   radial-gradient(circle at 100% 100%, var(--accent-glow) 0%, transparent 50%);
-      z-index: -1;
+      z-index: 0;
       pointer-events: none;
     }
 
+    header,
+    section,
+    footer {
+      position: relative;
+      z-index: 2;
+    }
+
     .font-display { font-family: 'Space Grotesk', sans-serif; }
+
+    .math-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      color: rgba(243, 244, 246, 0.62);
+    }
+
+    .math-backdrop::before {
+      content: "";
+      position: absolute;
+      inset: -18%;
+      background-image:
+        linear-gradient(rgba(79, 209, 197, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212, 175, 55, 0.08) 1px, transparent 1px);
+      background-size: 74px 74px;
+      transform: rotate(-9deg) scale(1.06);
+      opacity: 0.72;
+      mask-image: radial-gradient(circle at 52% 26%, black 0%, transparent 70%);
+    }
+
+    .complex-plane {
+      position: absolute;
+      width: min(82vw, 920px);
+      aspect-ratio: 1 / 1;
+      top: 8vh;
+      right: -12vw;
+      border: 1px solid rgba(212, 175, 55, 0.16);
+      border-radius: 50%;
+      transform: rotate(-12deg);
+      opacity: 0.78;
+    }
+
+    .complex-plane::before,
+    .complex-plane::after {
+      content: "";
+      position: absolute;
+      background: linear-gradient(90deg, transparent, rgba(79, 209, 197, 0.34), transparent);
+      left: 4%;
+      right: 4%;
+      top: 50%;
+      height: 1px;
+    }
+
+    .complex-plane::after {
+      transform: rotate(90deg);
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.34), transparent);
+    }
+
+    .plane-label {
+      position: absolute;
+      font-size: clamp(0.7rem, 0.9vw, 0.95rem);
+      letter-spacing: 0;
+      color: rgba(212, 175, 55, 0.5);
+    }
+
+    .plane-label.re { right: 10%; top: 49%; }
+    .plane-label.im { left: 48%; top: 8%; color: rgba(79, 209, 197, 0.55); }
+
+    .orbit-svg {
+      position: absolute;
+      inset: 6%;
+      width: 88%;
+      height: 88%;
+      opacity: 0.58;
+    }
+
+    .math-formula {
+      position: absolute;
+      max-width: min(52vw, 700px);
+      white-space: nowrap;
+      font-size: clamp(0.8rem, 1.25vw, 1.35rem);
+      line-height: 1.45;
+      letter-spacing: 0;
+      color: rgba(243, 244, 246, 0.38);
+      text-shadow: 0 0 22px rgba(79, 209, 197, 0.12);
+      transform: translate3d(0, 0, 0) rotate(var(--r, 0deg));
+      animation: formulaFloat var(--dur, 18s) ease-in-out infinite;
+      will-change: transform, opacity, filter;
+    }
+
+    .math-formula strong {
+      color: rgba(212, 175, 55, 0.64);
+      font-weight: 600;
+    }
+
+    .math-formula .teal {
+      color: rgba(79, 209, 197, 0.66);
+    }
+
+    .math-formula.large {
+      font-size: clamp(1rem, 1.65vw, 1.9rem);
+      color: rgba(243, 244, 246, 0.46);
+    }
+
+    .math-formula.faint {
+      color: rgba(156, 163, 175, 0.24);
+    }
+
+    .math-formula.f1 { top: 16vh; left: 5vw; --r: -7deg; --dur: 19s; --x1: 18px; --y1: -28px; --x2: -12px; --y2: 16px; --tilt: 3deg; }
+    .math-formula.f2 { top: 28vh; right: 9vw; --r: 6deg; --dur: 23s; --x1: -22px; --y1: -18px; --x2: 16px; --y2: 22px; --tilt: -4deg; }
+    .math-formula.f3 { top: 46vh; left: 12vw; --r: 4deg; --dur: 21s; --x1: 24px; --y1: 18px; --x2: -18px; --y2: -24px; --tilt: 2deg; }
+    .math-formula.f4 { top: 64vh; right: 5vw; --r: -5deg; --dur: 25s; --x1: -16px; --y1: 26px; --x2: 22px; --y2: -14px; --tilt: 4deg; }
+    .math-formula.f5 { top: 78vh; left: 6vw; --r: 8deg; --dur: 18s; --x1: 20px; --y1: -20px; --x2: -16px; --y2: 26px; --tilt: -3deg; }
+    .math-formula.f6 { top: 7vh; right: 22vw; --r: 10deg; --dur: 26s; --x1: -20px; --y1: 20px; --x2: 18px; --y2: -22px; --tilt: 3deg; }
+    .math-formula.f7 { top: 88vh; right: 18vw; --r: -8deg; --dur: 20s; --x1: 14px; --y1: -26px; --x2: -24px; --y2: 14px; --tilt: 4deg; }
+    .math-formula.f8 { top: 38vh; right: 31vw; --r: -11deg; --dur: 24s; --x1: -18px; --y1: -22px; --x2: 22px; --y2: 18px; --tilt: -3deg; }
+
+    @keyframes formulaFloat {
+      0% {
+        transform: translate3d(0, 0, 0) rotate(var(--r, 0deg));
+        opacity: 0.48;
+        filter: blur(0);
+      }
+      28% {
+        transform: translate3d(var(--x1, 18px), var(--y1, -22px), 0) rotate(calc(var(--r, 0deg) + var(--tilt, 3deg)));
+        opacity: 0.86;
+        filter: blur(0.2px);
+      }
+      62% {
+        transform: translate3d(var(--x2, -16px), var(--y2, 18px), 0) rotate(calc(var(--r, 0deg) - var(--tilt, 3deg)));
+        opacity: 0.66;
+        filter: blur(0);
+      }
+      100% {
+        transform: translate3d(0, 0, 0) rotate(var(--r, 0deg));
+        opacity: 0.52;
+        filter: blur(0.15px);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .complex-plane {
+        width: 118vw;
+        right: -52vw;
+        top: 12vh;
+        opacity: 0.48;
+      }
+
+      .math-formula {
+        max-width: 96vw;
+        font-size: 0.78rem;
+        opacity: 0.42;
+      }
+
+      .math-formula.f2,
+      .math-formula.f4,
+      .math-formula.f6,
+      .math-formula.f8 {
+        display: none;
+      }
+
+      .math-formula.f1 { top: 13vh; left: 4vw; }
+      .math-formula.f3 { top: 45vh; left: 6vw; }
+      .math-formula.f5 { top: 72vh; left: 4vw; }
+      .math-formula.f7 { top: 90vh; right: 5vw; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .math-formula,
+      .orb,
+      .core-ring,
+      .core-center {
+        animation: none !important;
+      }
+    }
     
     .glass-panel {
       background: rgba(17, 17, 17, 0.6);
@@ -114,7 +291,7 @@
       position: absolute;
       border-radius: 50%;
       filter: blur(100px);
-      z-index: -1;
+      z-index: 1;
       animation: float 20s infinite ease-in-out alternate;
     }
     .orb-1 {
@@ -172,6 +349,49 @@
 </head>
 <body class="antialiased">
 
+  <div class="math-backdrop" aria-hidden="true">
+    <div class="complex-plane">
+      <span class="plane-label re">Re z</span>
+      <span class="plane-label im">Im z</span>
+      <svg class="orbit-svg" viewBox="0 0 640 640" fill="none" role="presentation">
+        <defs>
+          <linearGradient id="orbit-gradient" x1="92" y1="108" x2="548" y2="530" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#4FD1C5" stop-opacity="0.78"></stop>
+            <stop offset="0.55" stop-color="#D4AF37" stop-opacity="0.58"></stop>
+            <stop offset="1" stop-color="#F3F4F6" stop-opacity="0.18"></stop>
+          </linearGradient>
+        </defs>
+        <path d="M320 320 C388 210 508 252 488 356 C468 462 314 512 226 424 C136 334 184 168 338 142 C492 116 590 286 520 428 C448 574 234 590 112 456 C-8 324 34 98 230 38 C436 -26 646 126 616 354" stroke="url(#orbit-gradient)" stroke-width="2.5" stroke-linecap="round"></path>
+        <path d="M320 320 C280 374 206 360 202 294 C198 226 286 184 356 224 C430 266 430 376 356 430 C254 504 96 428 102 290 C108 138 292 40 448 122" stroke="url(#orbit-gradient)" stroke-width="1.2" stroke-linecap="round" opacity="0.58"></path>
+      </svg>
+    </div>
+
+    <div class="math-formula large f1">
+      z<sub>n+1</sub> = z<sub>n</sub><sup>2</sup> + c(θ) + <span class="teal">γΦ<sub>r</sub>(Re z<sub>n</sub>, Im z<sub>n</sub>)</span>e<sup>i2πρ</sup>
+    </div>
+    <div class="math-formula f2">
+      c(θ) = (s - μ<sub>s</sub>)/σ<sub>s</sub> + i(t - μ<sub>t</sub>)/σ<sub>t</sub> + λρ(1 - i)
+    </div>
+    <div class="math-formula large f3">
+      <strong>B<sub>n</sub> = B<sub>0</sub>Π<sub>d=1</sub><sup>n</sup>(1 + R<sub>d</sub>) ≥ B<sub>0</sub>(1.01)<sup>n</sup></strong>
+    </div>
+    <div class="math-formula f4">
+      Ψ<sub>n</sub> = exp(Σ log(1 + R<sub>d</sub>)) · exp(i arg z<sub>n</sub>)
+    </div>
+    <div class="math-formula f5">
+      R<sub>d</sub>(θ) = Π<sub>d</sub>(θ) / B<sub>d-1</sub>, &nbsp; Π<sub>d</sub> = Σ q<sub>k</sub>(P<sup>exit</sup><sub>k</sub> - P<sup>entry</sup><sub>k</sub>)
+    </div>
+    <div class="math-formula faint f6">
+      Φ<sub>r</sub>(x,y) = J(s<sub>0</sub> + Δ<sub>s</sub>x, t<sub>0</sub> + Δ<sub>t</sub>y, r)
+    </div>
+    <div class="math-formula f7">
+      log B<sub>n</sub> - log B<sub>0</sub> = Σ log(1 + R<sub>d</sub>) ≥ n log(1.01)
+    </div>
+    <div class="math-formula faint f8">
+      |z<sub>n</sub>| &gt; R ⇒ escape depth, &nbsp; R<sub>d</sub> ≥ 0.01 ⇒ geometric lower bound
+    </div>
+  </div>
+
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
 
@@ -190,7 +410,7 @@
         <a href="#performance" class="hover:text-white transition">Performance</a>
       </div>
       <a href="http://3.37.70.86:3000/" target="_blank" class="text-sm font-semibold text-[#D4AF37] border border-[#D4AF37]/30 px-5 py-2 rounded-full hover:bg-[#D4AF37]/10 transition">
-        Live Demo
+        Real Live
       </a>
     </div>
   </header>
@@ -279,7 +499,7 @@
             <div class="text-3xl font-display font-bold">April Performance</div>
           </div>
           <div class="text-right">
-            <div class="text-4xl font-display font-light text-teal-400">+20% <span class="text-lg">이상</span></div>
+            <div class="text-4xl font-display font-light text-teal-400">35.8%</div>
             <div class="text-xs text-gray-500 mt-1">April Monthly Return</div>
           </div>
         </div>
@@ -296,7 +516,7 @@
             <div class="w-2 h-12 bg-[#D4AF37] rounded-full"></div>
             <div>
               <div class="font-bold text-sm">검증된 수익 엔진</div>
-              <div class="text-xs text-gray-400 mt-1">4월 한 달 실전 누적수익 20%를 돌파하며, 시장에서 실제 수익으로 스스로의 가치를 증명하는 유일무이한 AI입니다.</div>
+              <div class="text-xs text-gray-400 mt-1">4월 한 달 실전 누적수익 35.8%를 기록하며, 시장에서 실제 수익으로 스스로의 가치를 증명하는 유일무이한 AI입니다.</div>
             </div>
           </div>
         </div>
