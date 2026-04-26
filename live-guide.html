@@ -223,6 +223,7 @@
     .status-pill {
       display: inline-flex;
       align-items: center;
+      gap: 0.4rem;
       border-radius: 999px;
       padding: 0.36rem 0.7rem;
       border: 1px solid rgba(255, 255, 255, 0.13);
@@ -232,6 +233,26 @@
       font-size: 0.78rem;
       font-weight: 800;
       white-space: nowrap;
+    }
+
+    .emoji-badge {
+      width: 44px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.055);
+      font-size: 1.45rem;
+      flex: none;
+    }
+
+    .signal-card {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 1rem;
     }
 
     @media (max-width: 768px) {
@@ -317,7 +338,7 @@
           <p class="text-teal-300 text-sm font-semibold mb-2">First Check</p>
           <h2 class="font-display text-3xl font-bold mb-4">처음에는 Active Watches부터 보십시오</h2>
           <p class="text-gray-400 leading-relaxed">
-            Ranking은 후보군이고, Active Watches는 AI가 실제로 관찰 단계에 올린 종목입니다. 처음 접속한 사용자는 바로 매수 종목을 찾기보다 관찰 중인 종목의 상태, 가격, 점수, 텔레그램 알람을 함께 확인하는 흐름이 맞습니다.
+            Ranking은 후보군이고, Active Watches는 AI가 실제로 관찰 단계에 올린 종목입니다. 처음 접속한 사용자는 바로 매수 종목을 찾기보다 🌱, 🔍, 🎯, 💰 상태 아이콘을 보며 관찰 중인 종목의 상태, 가격, 점수, 텔레그램 알람을 함께 확인하는 흐름이 맞습니다.
           </p>
           <a href="http://3.37.70.86:3000/" class="action-button action-primary w-full mt-8">
             라이브 화면으로 입장
@@ -345,24 +366,36 @@
 
       <section class="grid md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
         <article class="panel p-5">
-          <div class="text-sm font-bold text-cyan-300 mb-2">Ranking</div>
+          <div class="flex items-center gap-3 mb-3">
+            <span class="emoji-badge">📊</span>
+            <div class="text-sm font-bold text-cyan-300">Ranking</div>
+          </div>
           <h3 class="font-bold text-lg mb-2">관찰 후보군</h3>
           <p class="text-gray-400 text-sm leading-relaxed">AI가 강하게 보고 있는 후보 목록입니다. 바로 매수하라는 뜻이 아니라 관찰 시작점입니다.</p>
         </article>
         <article class="panel p-5">
-          <div class="text-sm font-bold text-[#D4AF37] mb-2">Active Watches</div>
+          <div class="flex items-center gap-3 mb-3">
+            <span class="emoji-badge">🔍</span>
+            <div class="text-sm font-bold text-[#D4AF37]">Active Watches</div>
+          </div>
           <h3 class="font-bold text-lg mb-2">가장 먼저 볼 영역</h3>
-          <p class="text-gray-400 text-sm leading-relaxed">AI가 조건을 계속 추적하는 종목입니다. 상태가 바뀌면 매매 검토 우선순위가 올라갑니다.</p>
+          <p class="text-gray-400 text-sm leading-relaxed">AI가 조건을 계속 추적하는 종목입니다. 🌱 등록, 🔍 저점 추적, 🎯 매수 검토, 💰 매수 대기 상태를 봅니다.</p>
         </article>
         <article class="panel p-5">
-          <div class="text-sm font-bold text-sky-300 mb-2">Positions</div>
+          <div class="flex items-center gap-3 mb-3">
+            <span class="emoji-badge">💼</span>
+            <div class="text-sm font-bold text-sky-300">Positions</div>
+          </div>
           <h3 class="font-bold text-lg mb-2">보유 상태 확인</h3>
-          <p class="text-gray-400 text-sm leading-relaxed">현재 보유 중인 종목과 진입가, 고가 기준 흐름을 확인하는 영역입니다.</p>
+          <p class="text-gray-400 text-sm leading-relaxed">현재 보유 중인 종목과 진입가, 고가 기준 흐름을 확인하는 영역입니다. 보유 관찰은 💼로 표시됩니다.</p>
         </article>
         <article class="panel p-5">
-          <div class="text-sm font-bold text-violet-300 mb-2">Today Orders</div>
+          <div class="flex items-center gap-3 mb-3">
+            <span class="emoji-badge">🔵</span>
+            <div class="text-sm font-bold text-violet-300">Today Orders</div>
+          </div>
           <h3 class="font-bold text-lg mb-2">오늘 기록</h3>
-          <p class="text-gray-400 text-sm leading-relaxed">오늘 발생한 주문, 신호, 상태 변화를 시간순으로 확인합니다.</p>
+          <p class="text-gray-400 text-sm leading-relaxed">오늘 발생한 주문, 신호, 상태 변화를 시간순으로 확인합니다. 매수는 🔵, 매도는 🔴로 표시됩니다.</p>
         </article>
       </section>
 
@@ -376,25 +409,35 @@
             </p>
           </div>
           <div class="grid sm:grid-cols-2 gap-3">
-            <div class="panel p-4">
-              <span class="status-pill mb-3">SEEDED</span>
+            <div class="signal-card">
+              <span class="status-pill mb-3">🌱 SEEDED</span>
               <h3 class="font-bold mb-1">관찰 등록</h3>
               <p class="text-gray-400 text-sm leading-relaxed">랭킹에서 조건을 만족해 관찰 대상으로 올라온 상태입니다.</p>
             </div>
-            <div class="panel p-4">
-              <span class="status-pill mb-3">LOW_TRACKING</span>
+            <div class="signal-card">
+              <span class="status-pill mb-3">🔍 LOW_TRACKING</span>
               <h3 class="font-bold mb-1">저점 추적</h3>
               <p class="text-gray-400 text-sm leading-relaxed">바로 추격하지 않고 눌림과 반등 조건을 확인하는 단계입니다.</p>
             </div>
-            <div class="panel p-4">
-              <span class="status-pill mb-3">TRIGGER_READY</span>
+            <div class="signal-card">
+              <span class="status-pill mb-3">🎯 TRIGGER_READY</span>
               <h3 class="font-bold mb-1">매수 검토 구간</h3>
               <p class="text-gray-400 text-sm leading-relaxed">AI 조건이 강해진 상태입니다. 알람과 현재가 흐름을 함께 보고 직접 판단합니다.</p>
             </div>
-            <div class="panel p-4">
-              <span class="status-pill mb-3">HELD / EXIT_PENDING</span>
+            <div class="signal-card">
+              <span class="status-pill mb-3">💰 BUY_PENDING</span>
+              <h3 class="font-bold mb-1">매수 대기</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">매수 조건이 강해져 주문 또는 사용자 확인 대기 흐름으로 들어간 상태입니다.</p>
+            </div>
+            <div class="signal-card">
+              <span class="status-pill mb-3">💼 HELD</span>
+              <h3 class="font-bold mb-1">보유 관찰</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">이미 보유 중인 종목의 고가, 수익률, 청산 흐름을 확인하는 상태입니다.</p>
+            </div>
+            <div class="signal-card">
+              <span class="status-pill mb-3">⏳ EXIT_PENDING</span>
               <h3 class="font-bold mb-1">보유 또는 청산 관찰</h3>
-              <p class="text-gray-400 text-sm leading-relaxed">이미 보유 중이거나 청산 조건을 확인하는 상태입니다.</p>
+              <p class="text-gray-400 text-sm leading-relaxed">청산 조건을 확인하거나 청산 흐름이 진행 중인 상태입니다.</p>
             </div>
           </div>
         </div>
@@ -404,10 +447,10 @@
         <article class="panel p-6 md:p-8">
           <h2 class="font-display text-2xl font-bold text-[#D4AF37] mb-5">직접매매 판단 순서</h2>
           <ol class="space-y-4 text-gray-300 leading-relaxed">
-            <li><strong class="text-white">1. Active Watches 확인</strong><br>관찰 중인 종목과 상태를 먼저 봅니다.</li>
-            <li><strong class="text-white">2. 텔레그램 알람 확인</strong><br>AI 알람이 온 종목인지 확인합니다.</li>
-            <li><strong class="text-white">3. Ranking과 가격 흐름 비교</strong><br>랭킹, 점수, 현재가 흐름이 같은 방향인지 봅니다.</li>
-            <li><strong class="text-white">4. 증권사 앱에서 직접 주문</strong><br>최종 매수와 매도는 사용자가 직접 실행합니다.</li>
+            <li><strong class="text-white">1. 🔍 Active Watches 확인</strong><br>관찰 중인 종목과 상태를 먼저 봅니다.</li>
+            <li><strong class="text-white">2. 🎯 텔레그램 알람 확인</strong><br>AI 알람이 온 종목인지 확인합니다.</li>
+            <li><strong class="text-white">3. 📊 Ranking과 가격 흐름 비교</strong><br>랭킹, 점수, 현재가 흐름이 같은 방향인지 봅니다.</li>
+            <li><strong class="text-white">4. 🔵 증권사 앱에서 직접 주문</strong><br>최종 매수와 매도는 사용자가 직접 실행합니다. 매도 기록은 🔴로 구분됩니다.</li>
           </ol>
         </article>
 
