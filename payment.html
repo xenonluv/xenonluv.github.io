@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zenith AI 요금제 | Live Engine Access</title>
+  <meta name="description" content="Zenith AI 라이브 엔진 접속을 위한 무료 체험, Pro, Max 요금제 안내 페이지입니다.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap');
+
+    :root {
+      --bg-dark: #050505;
+      --surface-border: #222222;
+      --accent-gold: #D4AF37;
+      --accent-teal: #4FD1C5;
+      --accent-glow: rgba(212, 175, 55, 0.15);
+      --teal-glow: rgba(20, 184, 166, 0.15);
+      --text-main: #F3F4F6;
+      --text-muted: #9CA3AF;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 0%, var(--teal-glow) 0%, transparent 50%),
+                  radial-gradient(circle at 100% 100%, var(--accent-glow) 0%, transparent 50%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .font-display {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .math-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      color: rgba(243, 244, 246, 0.62);
+    }
+
+    .math-backdrop::before {
+      content: "";
+      position: absolute;
+      inset: -18%;
+      background-image:
+        linear-gradient(rgba(79, 209, 197, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212, 175, 55, 0.08) 1px, transparent 1px);
+      background-size: 74px 74px;
+      transform: rotate(-9deg) scale(1.06);
+      opacity: 0.72;
+      mask-image: radial-gradient(circle at 52% 26%, black 0%, transparent 70%);
+    }
+
+    .complex-plane {
+      position: absolute;
+      width: min(82vw, 920px);
+      aspect-ratio: 1 / 1;
+      top: 8vh;
+      right: -12vw;
+      border: 1px solid rgba(212, 175, 55, 0.16);
+      border-radius: 50%;
+      transform: rotate(-12deg);
+      opacity: 0.78;
+    }
+
+    .complex-plane::before,
+    .complex-plane::after {
+      content: "";
+      position: absolute;
+      left: 4%;
+      right: 4%;
+      top: 50%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(79, 209, 197, 0.34), transparent);
+    }
+
+    .complex-plane::after {
+      transform: rotate(90deg);
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.34), transparent);
+    }
+
+    .plane-label {
+      position: absolute;
+      font-size: clamp(0.7rem, 0.9vw, 0.95rem);
+      letter-spacing: 0;
+      color: rgba(212, 175, 55, 0.5);
+    }
+
+    .plane-label.re {
+      right: 10%;
+      top: 49%;
+    }
+
+    .plane-label.im {
+      left: 48%;
+      top: 8%;
+      color: rgba(79, 209, 197, 0.55);
+    }
+
+    .orbit-svg {
+      position: absolute;
+      inset: 6%;
+      width: 88%;
+      height: 88%;
+      opacity: 0.58;
+    }
+
+    .math-formula {
+      position: absolute;
+      max-width: min(52vw, 700px);
+      white-space: nowrap;
+      font-size: clamp(0.8rem, 1.25vw, 1.35rem);
+      line-height: 1.45;
+      letter-spacing: 0;
+      color: rgba(243, 244, 246, 0.38);
+      text-shadow: 0 0 22px rgba(79, 209, 197, 0.12);
+      transform: translate3d(0, 0, 0) rotate(var(--r, 0deg));
+      animation: formulaFloat var(--dur, 18s) ease-in-out infinite;
+      will-change: transform, opacity, filter;
+    }
+
+    .math-formula strong {
+      color: rgba(212, 175, 55, 0.64);
+      font-weight: 600;
+    }
+
+    .math-formula .teal {
+      color: rgba(79, 209, 197, 0.66);
+    }
+
+    .math-formula.large {
+      font-size: clamp(1rem, 1.65vw, 1.9rem);
+      color: rgba(243, 244, 246, 0.46);
+    }
+
+    .math-formula.faint {
+      color: rgba(156, 163, 175, 0.24);
+    }
+
+    .math-formula.f1 { top: 16vh; left: 5vw; --r: -7deg; --dur: 19s; --x1: 18px; --y1: -28px; --x2: -12px; --y2: 16px; --tilt: 3deg; }
+    .math-formula.f2 { top: 28vh; right: 9vw; --r: 6deg; --dur: 23s; --x1: -22px; --y1: -18px; --x2: 16px; --y2: 22px; --tilt: -4deg; }
+    .math-formula.f3 { top: 46vh; left: 12vw; --r: 4deg; --dur: 21s; --x1: 24px; --y1: 18px; --x2: -18px; --y2: -24px; --tilt: 2deg; }
+    .math-formula.f4 { top: 64vh; right: 5vw; --r: -5deg; --dur: 25s; --x1: -16px; --y1: 26px; --x2: 22px; --y2: -14px; --tilt: 4deg; }
+    .math-formula.f5 { top: 78vh; left: 6vw; --r: 8deg; --dur: 18s; --x1: 20px; --y1: -20px; --x2: -16px; --y2: 26px; --tilt: -3deg; }
+    .math-formula.f6 { top: 7vh; right: 22vw; --r: 10deg; --dur: 26s; --x1: -20px; --y1: 20px; --x2: 18px; --y2: -22px; --tilt: 3deg; }
+    .math-formula.f7 { top: 88vh; right: 18vw; --r: -8deg; --dur: 20s; --x1: 14px; --y1: -26px; --x2: -24px; --y2: 14px; --tilt: 4deg; }
+    .math-formula.f8 { top: 38vh; right: 31vw; --r: -11deg; --dur: 24s; --x1: -18px; --y1: -22px; --x2: 22px; --y2: 18px; --tilt: -3deg; }
+
+    @keyframes formulaFloat {
+      0% {
+        transform: translate3d(0, 0, 0) rotate(var(--r, 0deg));
+        opacity: 0.48;
+        filter: blur(0);
+      }
+      28% {
+        transform: translate3d(var(--x1, 18px), var(--y1, -22px), 0) rotate(calc(var(--r, 0deg) + var(--tilt, 3deg)));
+        opacity: 0.86;
+        filter: blur(0.2px);
+      }
+      62% {
+        transform: translate3d(var(--x2, -16px), var(--y2, 18px), 0) rotate(calc(var(--r, 0deg) - var(--tilt, 3deg)));
+        opacity: 0.66;
+        filter: blur(0);
+      }
+      100% {
+        transform: translate3d(0, 0, 0) rotate(var(--r, 0deg));
+        opacity: 0.52;
+        filter: blur(0.15px);
+      }
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 999px;
+      filter: blur(100px);
+      opacity: 0.45;
+      z-index: 1;
+      pointer-events: none;
+      animation: float 10s infinite alternate ease-in-out;
+    }
+
+    .orb-1 {
+      width: 400px;
+      height: 400px;
+      background: rgba(45, 212, 191, 0.15);
+      top: -100px;
+      right: -100px;
+    }
+
+    .orb-2 {
+      width: 520px;
+      height: 520px;
+      background: rgba(212, 175, 55, 0.12);
+      bottom: -220px;
+      left: -120px;
+      animation-delay: -3s;
+    }
+
+    @keyframes float {
+      from { transform: translate(0, 0); }
+      to { transform: translate(-50px, 50px); }
+    }
+
+    .page-shell {
+      position: relative;
+      z-index: 2;
+    }
+
+    .nav-glass {
+      background: rgba(5, 5, 5, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--surface-border);
+    }
+
+    .plan-card {
+      min-height: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 24px;
+      background:
+        linear-gradient(180deg, rgba(212, 175, 55, 0.10), rgba(79, 209, 197, 0.04) 44%, rgba(255, 255, 255, 0.025)),
+        rgba(17, 17, 17, 0.76);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.28);
+    }
+
+    .plan-card.featured {
+      border-color: rgba(212, 175, 55, 0.42);
+      box-shadow: 0 28px 100px rgba(212, 175, 55, 0.1);
+    }
+
+    .plan-icon {
+      width: 64px;
+      height: 64px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 18px;
+      color: var(--accent-gold);
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      background: rgba(212, 175, 55, 0.08);
+    }
+
+    .plan-button {
+      min-height: 58px;
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-radius: 16px;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .plan-button:hover {
+      transform: translateY(-1px);
+    }
+
+    .plan-button.primary {
+      color: #050505;
+      background: linear-gradient(135deg, #F7D76B, #D4AF37);
+      box-shadow: 0 14px 34px rgba(212, 175, 55, 0.22);
+    }
+
+    .plan-button.secondary {
+      color: #F3F4F6;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .plan-button.disabled,
+    .plan-button:disabled {
+      color: rgba(243, 244, 246, 0.46);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.035);
+      cursor: not-allowed;
+    }
+
+    .plan-button.disabled:hover,
+    .plan-button:disabled:hover {
+      transform: none;
+    }
+
+    .feature-row {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 12px;
+      color: rgba(243, 244, 246, 0.78);
+      line-height: 1.55;
+    }
+
+    .feature-row svg {
+      margin-top: 4px;
+      color: var(--accent-teal);
+      flex: none;
+    }
+
+    .badge {
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      background: rgba(212, 175, 55, 0.1);
+      color: #F7D76B;
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 768px) {
+      .complex-plane {
+        width: 118vw;
+        right: -52vw;
+        top: 12vh;
+        opacity: 0.48;
+      }
+
+      .math-formula {
+        max-width: 96vw;
+        font-size: 0.78rem;
+        opacity: 0.42;
+      }
+
+      .math-formula.f2,
+      .math-formula.f4,
+      .math-formula.f6,
+      .math-formula.f8 {
+        display: none;
+      }
+
+      .math-formula.f1 { top: 13vh; left: 4vw; }
+      .math-formula.f3 { top: 45vh; left: 6vw; }
+      .math-formula.f5 { top: 72vh; left: 4vw; }
+      .math-formula.f7 { top: 90vh; right: 5vw; }
+
+      .plan-card {
+        border-radius: 16px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .math-formula,
+      .orb {
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="antialiased">
+  <div class="math-backdrop" aria-hidden="true">
+    <div class="complex-plane">
+      <span class="plane-label re">Re z</span>
+      <span class="plane-label im">Im z</span>
+      <svg class="orbit-svg" viewBox="0 0 640 640" fill="none" role="presentation">
+        <defs>
+          <linearGradient id="orbit-gradient" x1="92" y1="108" x2="548" y2="530" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#4FD1C5" stop-opacity="0.78"></stop>
+            <stop offset="0.55" stop-color="#D4AF37" stop-opacity="0.58"></stop>
+            <stop offset="1" stop-color="#F3F4F6" stop-opacity="0.18"></stop>
+          </linearGradient>
+        </defs>
+        <path d="M320 320 C388 210 508 252 488 356 C468 462 314 512 226 424 C136 334 184 168 338 142 C492 116 590 286 520 428 C448 574 234 590 112 456 C-8 324 34 98 230 38 C436 -26 646 126 616 354" stroke="url(#orbit-gradient)" stroke-width="2.5" stroke-linecap="round"></path>
+        <path d="M320 320 C280 374 206 360 202 294 C198 226 286 184 356 224 C430 266 430 376 356 430 C254 504 96 428 102 290 C108 138 292 40 448 122" stroke="url(#orbit-gradient)" stroke-width="1.2" stroke-linecap="round" opacity="0.58"></path>
+      </svg>
+    </div>
+
+    <div class="math-formula large f1">
+      z<sub>n+1</sub> = z<sub>n</sub><sup>2</sup> + c(θ) + <span class="teal">γΦ<sub>r</sub>(Re z<sub>n</sub>, Im z<sub>n</sub>)</span>e<sup>i2πρ</sup>
+    </div>
+    <div class="math-formula f2">
+      c(θ) = (s - μ<sub>s</sub>)/σ<sub>s</sub> + i(t - μ<sub>t</sub>)/σ<sub>t</sub> + λρ(1 - i)
+    </div>
+    <div class="math-formula large f3">
+      <strong>B<sub>n</sub> = B<sub>0</sub>Π<sub>d=1</sub><sup>n</sup>(1 + R<sub>d</sub>) ≥ B<sub>0</sub>(1.01)<sup>n</sup></strong>
+    </div>
+    <div class="math-formula f4">
+      Ψ<sub>n</sub> = exp(Σ log(1 + R<sub>d</sub>)) · exp(i arg z<sub>n</sub>)
+    </div>
+    <div class="math-formula f5">
+      R<sub>d</sub>(θ) = Π<sub>d</sub>(θ) / B<sub>d-1</sub>, &nbsp; Π<sub>d</sub> = Σ q<sub>k</sub>(P<sup>exit</sup><sub>k</sub> - P<sup>entry</sup><sub>k</sub>)
+    </div>
+    <div class="math-formula faint f6">
+      Φ<sub>r</sub>(x,y) = J(s<sub>0</sub> + Δ<sub>s</sub>x, t<sub>0</sub> + Δ<sub>t</sub>y, r)
+    </div>
+    <div class="math-formula f7">
+      log B<sub>n</sub> - log B<sub>0</sub> = Σ log(1 + R<sub>d</sub>) ≥ n log(1.01)
+    </div>
+    <div class="math-formula faint f8">
+      |z<sub>n</sub>| &gt; R ⇒ escape depth, &nbsp; R<sub>d</sub> ≥ 0.01 ⇒ geometric lower bound
+    </div>
+  </div>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="page-shell min-h-screen">
+    <header class="nav-glass sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded bg-gradient-to-br from-[#D4AF37] to-[#8B7322] flex items-center justify-center shadow-[0_0_15px_rgba(212,175,55,0.4)]">
+            <span class="font-display font-bold text-black text-sm">Z</span>
+          </div>
+          <span class="font-display font-bold text-xl tracking-wide">ZENITH <span class="font-light text-gray-400">AI</span></span>
+        </a>
+        <a href="index.html" class="text-sm font-semibold text-[#D4AF37] border border-[#D4AF37]/30 px-5 py-2 rounded-full hover:bg-[#D4AF37]/10 transition">
+          메인으로
+        </a>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 pt-14 pb-20">
+      <section class="text-center max-w-4xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-teal-500/30 bg-teal-500/10 text-teal-300 text-xs font-semibold tracking-widest uppercase mb-6">
+          Live Engine Access
+        </div>
+        <h1 class="font-display text-4xl md:text-6xl font-bold leading-tight mb-5">
+          Zenith AI 라이브 엔진<br class="hidden md:block">
+          <span class="text-[#D4AF37]">요금제 선택</span>
+        </h1>
+        <p class="text-gray-400 text-base md:text-lg leading-relaxed">
+          무료 한달 체험으로 먼저 실전 검증 화면을 확인하고, 사용량과 분석 범위에 맞는 플랜을 선택할 수 있습니다.
+        </p>
+      </section>
+
+      <section class="grid lg:grid-cols-3 gap-6 items-stretch">
+        <article class="plan-card featured p-6 md:p-8">
+          <div class="flex items-start justify-between gap-4 mb-8">
+            <div class="plan-icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                <path d="M12 3l7 4v5c0 4.4-2.8 7.7-7 9-4.2-1.3-7-4.6-7-9V7l7-4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path>
+                <path d="M8.7 12.2l2.1 2.1 4.6-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <span class="badge">추천 시작</span>
+          </div>
+          <h2 class="font-display text-3xl font-bold mb-2">무료 한달 체험</h2>
+          <p class="text-gray-400 mb-8">결제 전 라이브 엔진을 먼저 확인</p>
+          <div class="mb-8">
+            <span class="text-5xl font-display font-bold">$0</span>
+            <span class="text-gray-400 ml-2">/ 30일</span>
+          </div>
+          <a href="connect.html" class="plan-button primary mb-8">
+            무료 체험 시작하기
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </a>
+          <div class="space-y-4 border-t border-white/10 pt-7">
+            <div class="feature-row">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <span>라이브 체험 화면 30일 접근</span>
+            </div>
+            <div class="feature-row">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <span>실시간 엔진 상태와 거래 흐름 확인</span>
+            </div>
+            <div class="feature-row">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <span>기본 성과 및 리스크 로그 열람</span>
+            </div>
+            <div class="feature-row">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <span>약정 없이 체험 후 선택</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="plan-card p-6 md:p-8">
+          <div class="plan-icon mb-8" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <path d="M4 18V6m0 12h16M8 18V9m4 9V4m4 14v-6m4 6V8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+            </svg>
+          </div>
+          <h2 class="font-display text-3xl font-bold mb-2">Pro</h2>
+          <p class="text-gray-400 mb-8">개인 리서치와 실전 검증</p>
+          <div class="mb-8">
+            <span class="text-5xl font-display font-bold">$40</span>
+            <span class="text-gray-400 ml-2">/ 월</span>
+          </div>
+          <button class="plan-button secondary mb-8" type="button" disabled aria-disabled="true">
+            Pro 플랜 준비 중
+          </button>
+          <div class="space-y-4 border-t border-white/10 pt-7">
+            <div class="feature-row">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <span>무료 체험의 모든 기능 포함</span>
+            </div>
+            <div class="feature-row">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <span>장기 로그 보관과 분석 리포트</span>
+            </div>
+            <div class="feature-row">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <span>개인 전략 점검과 리플레이 접근</span>
+            </div>
+            <div class="feature-row">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <span>우선 알림과 업데이트 제공</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="plan-card p-6 md:p-8">
+          <div class="plan-icon mb-8" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <path d="M12 3v18m0-18 7 4-7 4-7-4 7-4zm0 8 7 4-7 4-7-4 7-4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path>
+            </svg>
+          </div>
+          <h2 class="font-display text-3xl font-bold mb-2">Max</h2>
+          <p class="text-gray-400 mb-8">고한도 분석과 우선 접근</p>
+          <div class="mb-8">
+            <span class="text-5xl font-display font-bold">$200</span>
+            <span class="text-gray-400 ml-2">/ 월</span>
+          </div>
+          <button class="plan-button disabled mb-8" type="button" disabled aria-disabled="true">
+            Max 플랜 준비 중
+          </button>
+          <div class="space-y-4 border-t border-white/10 pt-7">
+            <div class="feature-row">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <span>Pro의 모든 기능 포함</span>
+            </div>
+            <div class="feature-row">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <span>트래픽 집중 시간대 우선 접근</span>
+            </div>
+            <div class="feature-row">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <span>고급 리스크 분석과 병목 리포트</span>
+            </div>
+            <div class="feature-row">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <span>확장 사용량과 우선 지원</span>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

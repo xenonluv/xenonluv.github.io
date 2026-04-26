@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zenith AI 시작 전 확인 | Live Engine Access</title>
+  <meta name="description" content="Zenith AI 라이브 체험과 자동매매 기능 제공 예정 안내 페이지입니다.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap');
+
+    :root {
+      --bg-dark: #050505;
+      --surface-border: #222222;
+      --accent-gold: #D4AF37;
+      --accent-teal: #4FD1C5;
+      --accent-glow: rgba(212, 175, 55, 0.15);
+      --teal-glow: rgba(20, 184, 166, 0.15);
+      --text-main: #F3F4F6;
+      --text-muted: #9CA3AF;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 0%, var(--teal-glow) 0%, transparent 50%),
+                  radial-gradient(circle at 100% 100%, var(--accent-glow) 0%, transparent 50%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .font-display { font-family: 'Space Grotesk', sans-serif; }
+
+    .math-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      color: rgba(243, 244, 246, 0.62);
+    }
+
+    .math-backdrop::before {
+      content: "";
+      position: absolute;
+      inset: -18%;
+      background-image:
+        linear-gradient(rgba(79, 209, 197, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212, 175, 55, 0.08) 1px, transparent 1px);
+      background-size: 74px 74px;
+      transform: rotate(-9deg) scale(1.06);
+      opacity: 0.72;
+      mask-image: radial-gradient(circle at 52% 26%, black 0%, transparent 70%);
+    }
+
+    .complex-plane {
+      position: absolute;
+      width: min(82vw, 920px);
+      aspect-ratio: 1 / 1;
+      top: 8vh;
+      right: -12vw;
+      border: 1px solid rgba(212, 175, 55, 0.16);
+      border-radius: 50%;
+      transform: rotate(-12deg);
+      opacity: 0.78;
+    }
+
+    .complex-plane::before,
+    .complex-plane::after {
+      content: "";
+      position: absolute;
+      left: 4%;
+      right: 4%;
+      top: 50%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(79, 209, 197, 0.34), transparent);
+    }
+
+    .complex-plane::after {
+      transform: rotate(90deg);
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.34), transparent);
+    }
+
+    .plane-label {
+      position: absolute;
+      font-size: clamp(0.7rem, 0.9vw, 0.95rem);
+      letter-spacing: 0;
+      color: rgba(212, 175, 55, 0.5);
+    }
+
+    .plane-label.re { right: 10%; top: 49%; }
+    .plane-label.im { left: 48%; top: 8%; color: rgba(79, 209, 197, 0.55); }
+
+    .orbit-svg {
+      position: absolute;
+      inset: 6%;
+      width: 88%;
+      height: 88%;
+      opacity: 0.58;
+    }
+
+    .math-formula {
+      position: absolute;
+      max-width: min(52vw, 700px);
+      white-space: nowrap;
+      font-size: clamp(0.8rem, 1.25vw, 1.35rem);
+      line-height: 1.45;
+      letter-spacing: 0;
+      color: rgba(243, 244, 246, 0.38);
+      text-shadow: 0 0 22px rgba(79, 209, 197, 0.12);
+      transform: translate3d(0, 0, 0) rotate(var(--r, 0deg));
+      animation: formulaFloat var(--dur, 18s) ease-in-out infinite;
+      will-change: transform, opacity, filter;
+    }
+
+    .math-formula strong {
+      color: rgba(212, 175, 55, 0.64);
+      font-weight: 600;
+    }
+
+    .math-formula .teal { color: rgba(79, 209, 197, 0.66); }
+    .math-formula.large { font-size: clamp(1rem, 1.65vw, 1.9rem); color: rgba(243, 244, 246, 0.46); }
+    .math-formula.faint { color: rgba(156, 163, 175, 0.24); }
+
+    .math-formula.f1 { top: 16vh; left: 5vw; --r: -7deg; --dur: 19s; --x1: 18px; --y1: -28px; --x2: -12px; --y2: 16px; --tilt: 3deg; }
+    .math-formula.f2 { top: 28vh; right: 9vw; --r: 6deg; --dur: 23s; --x1: -22px; --y1: -18px; --x2: 16px; --y2: 22px; --tilt: -4deg; }
+    .math-formula.f3 { top: 46vh; left: 12vw; --r: 4deg; --dur: 21s; --x1: 24px; --y1: 18px; --x2: -18px; --y2: -24px; --tilt: 2deg; }
+    .math-formula.f4 { top: 64vh; right: 5vw; --r: -5deg; --dur: 25s; --x1: -16px; --y1: 26px; --x2: 22px; --y2: -14px; --tilt: 4deg; }
+    .math-formula.f5 { top: 78vh; left: 6vw; --r: 8deg; --dur: 18s; --x1: 20px; --y1: -20px; --x2: -16px; --y2: 26px; --tilt: -3deg; }
+    .math-formula.f6 { top: 7vh; right: 22vw; --r: 10deg; --dur: 26s; --x1: -20px; --y1: 20px; --x2: 18px; --y2: -22px; --tilt: 3deg; }
+    .math-formula.f7 { top: 88vh; right: 18vw; --r: -8deg; --dur: 20s; --x1: 14px; --y1: -26px; --x2: -24px; --y2: 14px; --tilt: 4deg; }
+    .math-formula.f8 { top: 38vh; right: 31vw; --r: -11deg; --dur: 24s; --x1: -18px; --y1: -22px; --x2: 22px; --y2: 18px; --tilt: -3deg; }
+
+    @keyframes formulaFloat {
+      0% { transform: translate3d(0, 0, 0) rotate(var(--r, 0deg)); opacity: 0.48; filter: blur(0); }
+      28% { transform: translate3d(var(--x1, 18px), var(--y1, -22px), 0) rotate(calc(var(--r, 0deg) + var(--tilt, 3deg))); opacity: 0.86; filter: blur(0.2px); }
+      62% { transform: translate3d(var(--x2, -16px), var(--y2, 18px), 0) rotate(calc(var(--r, 0deg) - var(--tilt, 3deg))); opacity: 0.66; filter: blur(0); }
+      100% { transform: translate3d(0, 0, 0) rotate(var(--r, 0deg)); opacity: 0.52; filter: blur(0.15px); }
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 999px;
+      filter: blur(100px);
+      opacity: 0.45;
+      z-index: 1;
+      pointer-events: none;
+      animation: float 10s infinite alternate ease-in-out;
+    }
+
+    .orb-1 {
+      width: 400px;
+      height: 400px;
+      background: rgba(45, 212, 191, 0.15);
+      top: -100px;
+      right: -100px;
+    }
+
+    .orb-2 {
+      width: 520px;
+      height: 520px;
+      background: rgba(212, 175, 55, 0.12);
+      bottom: -220px;
+      left: -120px;
+      animation-delay: -3s;
+    }
+
+    @keyframes float {
+      from { transform: translate(0, 0); }
+      to { transform: translate(-50px, 50px); }
+    }
+
+    .page-shell {
+      position: relative;
+      z-index: 2;
+    }
+
+    .nav-glass {
+      background: rgba(5, 5, 5, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--surface-border);
+    }
+
+    .panel {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 24px;
+      background:
+        linear-gradient(180deg, rgba(212, 175, 55, 0.10), rgba(79, 209, 197, 0.04) 48%, rgba(255, 255, 255, 0.025)),
+        rgba(17, 17, 17, 0.76);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.28);
+    }
+
+    .panel-primary {
+      border-color: rgba(212, 175, 55, 0.42);
+      box-shadow: 0 28px 100px rgba(212, 175, 55, 0.1);
+    }
+
+    .action-button {
+      min-height: 58px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-radius: 16px;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .action-button:hover { transform: translateY(-1px); }
+
+    .action-primary {
+      color: #050505;
+      background: linear-gradient(135deg, #F7D76B, #D4AF37);
+      box-shadow: 0 14px 34px rgba(212, 175, 55, 0.22);
+    }
+
+    .action-secondary {
+      color: #F3F4F6;
+      border: 1px solid rgba(79, 209, 197, 0.28);
+      background: rgba(79, 209, 197, 0.08);
+    }
+
+    .info-row {
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 12px;
+      color: rgba(243, 244, 246, 0.78);
+      line-height: 1.6;
+    }
+
+    .info-row svg {
+      margin-top: 4px;
+      color: var(--accent-teal);
+    }
+
+    .code-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.055);
+      padding: 0 12px;
+      font-family: 'Space Grotesk', monospace;
+      color: rgba(243, 244, 246, 0.9);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 768px) {
+      .complex-plane {
+        width: 118vw;
+        right: -52vw;
+        top: 12vh;
+        opacity: 0.48;
+      }
+
+      .math-formula {
+        max-width: 96vw;
+        font-size: 0.78rem;
+        opacity: 0.42;
+      }
+
+      .math-formula.f2,
+      .math-formula.f4,
+      .math-formula.f6,
+      .math-formula.f8 {
+        display: none;
+      }
+
+      .math-formula.f1 { top: 13vh; left: 4vw; }
+      .math-formula.f3 { top: 45vh; left: 6vw; }
+      .math-formula.f5 { top: 72vh; left: 4vw; }
+      .math-formula.f7 { top: 90vh; right: 5vw; }
+
+      .panel { border-radius: 16px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .math-formula,
+      .orb {
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="antialiased">
+  <div class="math-backdrop" aria-hidden="true">
+    <div class="complex-plane">
+      <span class="plane-label re">Re z</span>
+      <span class="plane-label im">Im z</span>
+      <svg class="orbit-svg" viewBox="0 0 640 640" fill="none" role="presentation">
+        <defs>
+          <linearGradient id="orbit-gradient" x1="92" y1="108" x2="548" y2="530" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#4FD1C5" stop-opacity="0.78"></stop>
+            <stop offset="0.55" stop-color="#D4AF37" stop-opacity="0.58"></stop>
+            <stop offset="1" stop-color="#F3F4F6" stop-opacity="0.18"></stop>
+          </linearGradient>
+        </defs>
+        <path d="M320 320 C388 210 508 252 488 356 C468 462 314 512 226 424 C136 334 184 168 338 142 C492 116 590 286 520 428 C448 574 234 590 112 456 C-8 324 34 98 230 38 C436 -26 646 126 616 354" stroke="url(#orbit-gradient)" stroke-width="2.5" stroke-linecap="round"></path>
+        <path d="M320 320 C280 374 206 360 202 294 C198 226 286 184 356 224 C430 266 430 376 356 430 C254 504 96 428 102 290 C108 138 292 40 448 122" stroke="url(#orbit-gradient)" stroke-width="1.2" stroke-linecap="round" opacity="0.58"></path>
+      </svg>
+    </div>
+
+    <div class="math-formula large f1">
+      z<sub>n+1</sub> = z<sub>n</sub><sup>2</sup> + c(θ) + <span class="teal">γΦ<sub>r</sub>(Re z<sub>n</sub>, Im z<sub>n</sub>)</span>e<sup>i2πρ</sup>
+    </div>
+    <div class="math-formula f2">
+      c(θ) = (s - μ<sub>s</sub>)/σ<sub>s</sub> + i(t - μ<sub>t</sub>)/σ<sub>t</sub> + λρ(1 - i)
+    </div>
+    <div class="math-formula large f3">
+      <strong>B<sub>n</sub> = B<sub>0</sub>Π<sub>d=1</sub><sup>n</sup>(1 + R<sub>d</sub>) ≥ B<sub>0</sub>(1.01)<sup>n</sup></strong>
+    </div>
+    <div class="math-formula f4">
+      Ψ<sub>n</sub> = exp(Σ log(1 + R<sub>d</sub>)) · exp(i arg z<sub>n</sub>)
+    </div>
+    <div class="math-formula f5">
+      R<sub>d</sub>(θ) = Π<sub>d</sub>(θ) / B<sub>d-1</sub>, &nbsp; Π<sub>d</sub> = Σ q<sub>k</sub>(P<sup>exit</sup><sub>k</sub> - P<sup>entry</sup><sub>k</sub>)
+    </div>
+    <div class="math-formula faint f6">
+      Φ<sub>r</sub>(x,y) = J(s<sub>0</sub> + Δ<sub>s</sub>x, t<sub>0</sub> + Δ<sub>t</sub>y, r)
+    </div>
+    <div class="math-formula f7">
+      log B<sub>n</sub> - log B<sub>0</sub> = Σ log(1 + R<sub>d</sub>) ≥ n log(1.01)
+    </div>
+    <div class="math-formula faint f8">
+      |z<sub>n</sub>| &gt; R ⇒ escape depth, &nbsp; R<sub>d</sub> ≥ 0.01 ⇒ geometric lower bound
+    </div>
+  </div>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="page-shell min-h-screen">
+    <header class="nav-glass sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded bg-gradient-to-br from-[#D4AF37] to-[#8B7322] flex items-center justify-center shadow-[0_0_15px_rgba(212,175,55,0.4)]">
+            <span class="font-display font-bold text-black text-sm">Z</span>
+          </div>
+          <span class="font-display font-bold text-xl tracking-wide">ZENITH <span class="font-light text-gray-400">AI</span></span>
+        </a>
+        <div class="flex items-center gap-3">
+          <a href="payment.html" class="hidden sm:inline-flex text-sm font-semibold text-gray-300 hover:text-white transition">요금제로</a>
+          <a href="index.html" class="text-sm font-semibold text-[#D4AF37] border border-[#D4AF37]/30 px-5 py-2 rounded-full hover:bg-[#D4AF37]/10 transition">메인으로</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 pt-14 pb-20">
+      <section class="text-center max-w-4xl mx-auto mb-12">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-teal-500/30 bg-teal-500/10 text-teal-300 text-xs font-semibold tracking-widest uppercase mb-6">
+          Start Mode
+        </div>
+        <h1 class="font-display text-4xl md:text-6xl font-bold leading-tight mb-5">
+          라이브 체험은 바로 보고<br class="hidden md:block">
+          <span class="text-[#D4AF37]">자동매매는 준비 중</span>
+        </h1>
+        <p class="text-gray-400 text-base md:text-lg leading-relaxed">
+          현재 무료 체험은 라이브 체험 화면 제공에 한정됩니다. 자동 주문 연결은 법률 검토와 등록 절차가 완료된 뒤 별도로 제공할 예정입니다.
+        </p>
+      </section>
+
+      <section class="grid lg:grid-cols-2 gap-6 items-stretch mb-8">
+        <article class="panel panel-primary p-6 md:p-8">
+          <div class="flex items-start justify-between gap-4 mb-8">
+            <div>
+              <p class="text-teal-300 text-sm font-semibold mb-2">1단계</p>
+              <h2 class="font-display text-3xl font-bold mb-3">라이브 체험만 보기</h2>
+              <p class="text-gray-400 leading-relaxed">
+                엔진 화면, 실시간 상태, 매매 흐름만 확인합니다. 계좌번호나 API 비밀키를 입력하지 않습니다.
+              </p>
+            </div>
+            <span class="px-3 py-1 rounded-full border border-[#D4AF37]/30 bg-[#D4AF37]/10 text-[#F7D76B] text-xs font-bold whitespace-nowrap">권장 시작</span>
+          </div>
+          <a href="http://3.37.70.86:3000/" class="action-button action-primary w-full mb-7">
+            라이브 체험 화면 열기
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </a>
+          <div class="space-y-4 border-t border-white/10 pt-7">
+            <div class="info-row">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <span>무료 체험 기간 동안 라이브 대시보드 접근</span>
+            </div>
+            <div class="info-row">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <span>주문 권한 연결 없이 엔진 동작 확인</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel p-6 md:p-8">
+          <div class="mb-8">
+            <p class="text-teal-300 text-sm font-semibold mb-2">2단계</p>
+            <h2 class="font-display text-3xl font-bold mb-3">자동매매 제공 예정</h2>
+            <p class="text-gray-400 leading-relaxed">
+              실제 주문 대행 또는 자동 주문 연결은 투자일임업 등 관련 법률 검토와 필요한 등록 절차가 끝난 뒤에만 제공합니다.
+            </p>
+          </div>
+          <a href="#service-notice" class="action-button action-secondary w-full mb-7">
+            법률 검토 후 제공 예정
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 5v14m0 0 6-6m-6 6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </a>
+          <div class="space-y-4 border-t border-white/10 pt-7">
+            <div class="info-row">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3v18m7-14H5m14 10H5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+              <span>현재 단계에서는 KIS 키나 계좌 정보를 입력받지 않음</span>
+            </div>
+            <div class="info-row">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3l7 4v5c0 4.4-2.8 7.7-7 9-4.2-1.3-7-4.6-7-9V7l7-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path></svg>
+              <span>법률 검토와 보안 등록 체계 완료 후 별도 공지</span>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section id="service-notice" class="panel p-6 md:p-8 mb-8">
+        <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-8">
+          <div>
+            <p class="text-teal-300 text-sm font-semibold mb-2">Service Notice</p>
+            <h2 class="font-display text-3xl font-bold mb-4">자동매매 연결은 아직 제공하지 않습니다</h2>
+            <p class="text-gray-400 leading-relaxed">
+              자동 주문, 계좌 연동, 매매 대행 기능은 현재 무료 체험 범위에 포함되지 않습니다. 향후 제공 시에는 관련 법률 검토, 등록 절차, 보안 인프라를 갖춘 뒤 별도 안내합니다.
+            </p>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div class="code-pill">KIS_APP_KEY</div>
+            <div class="code-pill">KIS_APP_SECRET</div>
+            <div class="code-pill">KIS_CANO</div>
+            <div class="code-pill">KIS_ACNT_PRDT_CD</div>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-5 mt-8 border-t border-white/10 pt-8">
+          <div>
+            <div class="text-[#D4AF37] font-display text-2xl font-bold mb-2">01</div>
+            <h3 class="font-bold text-lg mb-2">현재 제공 범위</h3>
+            <p class="text-gray-400 leading-relaxed">무료 체험은 라이브 엔진 화면과 검증 데이터 확인에 한정됩니다.</p>
+          </div>
+          <div>
+            <div class="text-[#D4AF37] font-display text-2xl font-bold mb-2">02</div>
+            <h3 class="font-bold text-lg mb-2">제공 예정 기능</h3>
+            <p class="text-gray-400 leading-relaxed">자동매매 연결은 법률 검토와 필요한 등록 절차가 완료된 뒤 제공합니다.</p>
+          </div>
+          <div>
+            <div class="text-[#D4AF37] font-display text-2xl font-bold mb-2">03</div>
+            <h3 class="font-bold text-lg mb-2">보안 원칙</h3>
+            <p class="text-gray-400 leading-relaxed">KIS 비밀키와 계좌 정보는 이 정적 페이지에서 입력받지 않습니다.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel p-6 md:p-8 border-[#D4AF37]/30">
+        <div class="grid lg:grid-cols-[1fr_auto] gap-6 items-center">
+          <div>
+            <h2 class="font-display text-2xl md:text-3xl font-bold mb-3">지금은 라이브 체험부터 확인</h2>
+            <p class="text-gray-400 leading-relaxed">
+              자동매매 연결은 제공 준비 중입니다. 현재는 주문 권한 연결 없이 엔진의 실시간 동작과 검증 흐름을 먼저 확인할 수 있습니다.
+            </p>
+          </div>
+          <a href="http://3.37.70.86:3000/" class="action-button action-primary px-7">
+            라이브부터 확인
+          </a>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
