@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AllYouQuant AI Algorithm Core | The Future Is Already Here</title>
-  <meta name="description" content="AllYouQuant AI Algorithm Core는 실시간 시장을 감지하고 적응하는 최첨단 AI 알고리즘 퀀트 엔진입니다.">
+  <title>AllYouQuant AI Quant Engine | Real-Time Market Intelligence</title>
+  <meta name="description" content="AllYouQuant AI Engine은 실시간 급변하는 시장 상황에 적응 반응하는 최첨단 인공지능 퀀트 엔진입니다.">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap');
@@ -345,308 +345,6 @@
       50% { transform: scale(1.05); opacity: 1; }
     }
 
-    .future-hero {
-      min-height: 100vh;
-      padding-top: 9.5rem;
-      padding-bottom: 5rem;
-      overflow: hidden;
-    }
-
-    .future-hero::before {
-      content: none;
-      position: absolute;
-      inset: 5rem 0 0;
-      background:
-        linear-gradient(rgba(79, 209, 197, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(212, 175, 55, 0.035) 1px, transparent 1px),
-        radial-gradient(circle at 68% 38%, rgba(79, 209, 197, 0.06), transparent 32%),
-        radial-gradient(circle at 28% 64%, rgba(244, 63, 94, 0.035), transparent 34%);
-      background-size: 44px 44px, 44px 44px, auto, auto;
-      mask-image: linear-gradient(180deg, black 0%, black 72%, transparent 100%);
-      opacity: 0.18;
-      z-index: -1;
-    }
-
-    .future-hero::after {
-      content: none;
-    }
-
-    .quote-line {
-      display: inline-grid;
-      gap: 0.65rem;
-      margin-bottom: 2rem;
-      color: rgba(243, 244, 246, 0.92);
-    }
-
-    .quote-line blockquote {
-      max-width: none;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(1rem, 3.2vw, 2.25rem);
-      line-height: 1.12;
-      font-weight: 700;
-      text-wrap: balance;
-    }
-
-    .quote-row {
-      display: block;
-      white-space: nowrap;
-    }
-
-    .quote-line cite {
-      color: rgba(79, 209, 197, 0.82);
-      font-style: normal;
-      font-size: 0.8rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.55rem;
-      border: 1px solid rgba(79, 209, 197, 0.34);
-      background: rgba(20, 184, 166, 0.1);
-      color: #9ff7ef;
-      border-radius: 9999px;
-      padding: 0.45rem 0.75rem;
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      box-shadow: 0 0 32px rgba(20, 184, 166, 0.12);
-    }
-
-    .hero-eyebrow span {
-      width: 0.48rem;
-      height: 0.48rem;
-      border-radius: 9999px;
-      background: #22d3ee;
-      box-shadow: 0 0 18px rgba(34, 211, 238, 0.82);
-    }
-
-    .hero-title {
-      font-size: clamp(2.7rem, 4.8rem, 4.8rem);
-      line-height: 1.03;
-      letter-spacing: 0;
-      text-wrap: balance;
-    }
-
-    .hero-lead {
-      max-width: 42rem;
-      color: rgba(209, 213, 219, 0.88);
-      font-size: 1.1rem;
-      line-height: 1.85;
-    }
-
-    .hero-proof-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.75rem;
-      max-width: 43rem;
-    }
-
-    .hero-proof {
-      border: 1px solid rgba(255, 255, 255, 0.11);
-      background: rgba(255, 255, 255, 0.045);
-      border-radius: 8px;
-      padding: 0.9rem 1rem;
-    }
-
-    .hero-proof strong {
-      display: block;
-      font-family: 'Space Grotesk', sans-serif;
-      color: #f8d86d;
-      font-size: 1.05rem;
-      line-height: 1.1;
-      margin-bottom: 0.35rem;
-    }
-
-    .hero-proof span {
-      color: rgba(209, 213, 219, 0.72);
-      font-size: 0.75rem;
-      line-height: 1.45;
-    }
-
-    .algorithm-stage {
-      position: relative;
-      min-height: 34rem;
-      display: grid;
-      place-items: center;
-    }
-
-    .algorithm-halo {
-      position: absolute;
-      width: min(31rem, 90vw);
-      aspect-ratio: 1 / 1;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle, rgba(212, 175, 55, 0.28) 0%, transparent 19%),
-        conic-gradient(from 120deg, rgba(79, 209, 197, 0), rgba(79, 209, 197, 0.64), rgba(212, 175, 55, 0.76), rgba(244, 63, 94, 0.36), rgba(79, 209, 197, 0));
-      filter: drop-shadow(0 0 55px rgba(79, 209, 197, 0.28));
-      opacity: 0.9;
-      animation: spin 18s linear infinite;
-    }
-
-    .algorithm-halo::before,
-    .algorithm-halo::after {
-      content: "";
-      position: absolute;
-      inset: 9%;
-      border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.22);
-    }
-
-    .algorithm-halo::after {
-      inset: 23%;
-      border-style: dashed;
-      border-color: rgba(212, 175, 55, 0.32);
-      animation: spin-reverse 12s linear infinite;
-    }
-
-    .algorithm-console {
-      position: relative;
-      width: min(27rem, 100%);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 8px;
-      background: rgba(5, 5, 5, 0.78);
-      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.58), inset 0 0 48px rgba(79, 209, 197, 0.06);
-      backdrop-filter: blur(18px);
-      overflow: hidden;
-    }
-
-    .algorithm-console::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.11) 46%, transparent 54%);
-      transform: translateX(-115%);
-      animation: consoleScan 5.8s ease-in-out infinite;
-      pointer-events: none;
-    }
-
-    @keyframes consoleScan {
-      0%, 42% { transform: translateX(-115%); }
-      72%, 100% { transform: translateX(115%); }
-    }
-
-    .console-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 1rem 1.1rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.11);
-      color: rgba(243, 244, 246, 0.92);
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .console-head span:last-child {
-      color: #67e8f9;
-    }
-
-    .signal-stack {
-      display: grid;
-      gap: 0.75rem;
-      padding: 1.1rem;
-    }
-
-    .signal-row {
-      display: grid;
-      grid-template-columns: 7rem 1fr auto;
-      align-items: center;
-      gap: 0.75rem;
-      min-height: 2.5rem;
-      color: rgba(243, 244, 246, 0.86);
-      font-size: 0.76rem;
-    }
-
-    .signal-meter {
-      height: 0.45rem;
-      border-radius: 9999px;
-      background: rgba(255, 255, 255, 0.08);
-      overflow: hidden;
-    }
-
-    .signal-meter span {
-      display: block;
-      width: var(--w);
-      height: 100%;
-      background: linear-gradient(90deg, #22d3ee, #d4af37);
-      box-shadow: 0 0 18px rgba(34, 211, 238, 0.36);
-    }
-
-    .console-core {
-      margin: 0 1.1rem 1.1rem;
-      border: 1px solid rgba(212, 175, 55, 0.2);
-      border-radius: 8px;
-      padding: 1rem;
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.11), rgba(20, 184, 166, 0.08));
-    }
-
-    .console-core .formula {
-      color: rgba(243, 244, 246, 0.88);
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.84rem;
-      line-height: 1.8;
-    }
-
-    .console-core strong {
-      color: #f8d86d;
-      font-weight: 700;
-    }
-
-    @media (max-width: 1024px) {
-      .algorithm-stage {
-        min-height: 28rem;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .future-hero {
-        padding-top: 7rem;
-        min-height: auto;
-      }
-
-      .quote-line blockquote {
-        font-size: clamp(1rem, 4.3vw, 1.45rem);
-        line-height: 1.08;
-      }
-
-      .hero-title {
-        font-size: 2.9rem;
-        line-height: 1.05;
-      }
-
-      .hero-proof-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .algorithm-stage {
-        min-height: 25rem;
-      }
-
-      .algorithm-halo {
-        width: 23rem;
-      }
-
-      .signal-row {
-        grid-template-columns: 5.8rem 1fr auto;
-        gap: 0.55rem;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .algorithm-halo,
-      .algorithm-halo::after,
-      .algorithm-console::before {
-        animation: none !important;
-      }
-    }
-
     .benchmark-panel {
       position: relative;
       overflow: hidden;
@@ -933,87 +631,31 @@
   </header>
 
   <!-- Hero Section -->
-  <section class="future-hero px-6 flex flex-col justify-center relative">
-    <div class="max-w-7xl mx-auto grid lg:grid-cols-[1.08fr_0.92fr] gap-12 xl:gap-16 items-center w-full">
+  <section class="pt-40 pb-20 px-6 min-h-screen flex flex-col justify-center relative">
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
       <div class="reveal">
-        <div class="quote-line">
-          <blockquote>
-            <span class="quote-row">"The future is already here -</span>
-            <span class="quote-row">it's just not evenly distributed."</span>
-          </blockquote>
-          <cite>William Gibson</cite>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-teal-500/30 bg-teal-500/10 text-teal-300 text-xs font-semibold tracking-widest uppercase mb-6">
+          <span class="w-2 h-2 rounded-full bg-teal-400 animate-pulse"></span>
+          Next-Gen Quant Engine
         </div>
-
-        <div class="hero-eyebrow mb-6">
-          <span></span>
-          Algorithm Core Armed
-        </div>
-
-        <h1 class="font-display hero-title font-bold mb-7">
-          시장의 미래를<br>
-          <span class="gradient-text">AI 알고리즘 코어</span>에 탑재하다.
+        <h1 class="font-display text-5xl md:text-7xl font-bold leading-[1.1] mb-6">
+          Beyond Limits.<br>
+          <span class="gradient-text">AllYouQuant AI</span> Quant Engine.
         </h1>
-
-        <p class="hero-lead mb-9">
-          AllYouQuant AI는 실시간 호가, 변동성, 뉴스성 충격, 프랙탈 패턴을 하나의 알고리즘 코어에서 감지하고 재계산합니다.
-          느린 해석이 아니라 시장이 움직이는 순간 반응하는 최첨단 퀀트 엔진입니다.
+        <p class="text-lg md:text-xl text-gray-400 leading-relaxed mb-10 max-w-xl text-balance">
+          기존 LLM의 한계를 뛰어넘어, 주식시장의 복잡한 프랙탈과 실시간 변동성에 즉각적으로 대응하는 최첨단 퀀트 인텔리전스입니다.
         </p>
-
-        <div class="hero-proof-grid mb-10">
-          <div class="hero-proof">
-            <strong>Real-Time</strong>
-            <span>틱 단위 시장 변화를 즉시 감지하는 라이브 신호 처리</span>
-          </div>
-          <div class="hero-proof">
-            <strong>Adaptive AI</strong>
-            <span>장세 변화에 맞춰 판단 축을 재조정하는 적응형 로직</span>
-          </div>
-          <div class="hero-proof">
-            <strong>Fractal Algo</strong>
-            <span>복잡한 가격 구조를 해석하는 고밀도 패턴 알고리즘</span>
-          </div>
-        </div>
-
         <div class="flex flex-wrap gap-4">
-          <a href="payment.html" class="btn-primary">라이브 엔진 확인</a>
-          <a href="#engine" class="btn-secondary">알고리즘 성능 보기</a>
+          <a href="payment.html" class="btn-primary">엔진 라이브 보기</a>
+          <a href="#vision" class="btn-secondary">출사표 읽기</a>
         </div>
       </div>
-
-      <div class="algorithm-stage reveal delay-1" aria-label="AllYouQuant AI 알고리즘 코어 시각화">
-        <div class="algorithm-halo"></div>
-        <div class="algorithm-console">
-          <div class="console-head">
-            <span>AllYouQuant Core</span>
-            <span>Online</span>
-          </div>
-          <div class="signal-stack">
-            <div class="signal-row">
-              <span>Volatility</span>
-              <div class="signal-meter"><span style="--w: 92%"></span></div>
-              <strong>92</strong>
-            </div>
-            <div class="signal-row">
-              <span>Order Flow</span>
-              <div class="signal-meter"><span style="--w: 87%"></span></div>
-              <strong>87</strong>
-            </div>
-            <div class="signal-row">
-              <span>Fractal Fit</span>
-              <div class="signal-meter"><span style="--w: 96%"></span></div>
-              <strong>96</strong>
-            </div>
-            <div class="signal-row">
-              <span>Risk Gate</span>
-              <div class="signal-meter"><span style="--w: 81%"></span></div>
-              <strong>81</strong>
-            </div>
-          </div>
-          <div class="console-core">
-            <div class="formula">
-              signal(t) = <strong>AI</strong>(price, volume, flow) + algo(fractal, risk)<br>
-              decision = argmax edge - drawdown_penalty
-            </div>
+      <div class="reveal delay-1 hidden lg:block">
+        <div class="ai-core">
+          <div class="core-ring"></div>
+          <div class="core-ring"></div>
+          <div class="core-center">
+            <span class="font-display font-bold text-2xl tracking-widest text-[#D4AF37] opacity-80">AllYouQuant</span>
           </div>
         </div>
       </div>
