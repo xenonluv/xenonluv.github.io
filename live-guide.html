@@ -332,16 +332,16 @@
           <span class="text-[#D4AF37]">이렇게 보면 됩니다</span>
         </h1>
         <p class="text-gray-400 text-base md:text-lg leading-relaxed">
-          Pro 버전은 자동매매가 아닙니다. AI가 보여주는 추천 종목 상태와 알람을 보고, 최종 매수와 매도는 사용자가 직접 판단합니다.
+          Pro 버전은 자동매매가 아닙니다. AI가 보여주는 화면 상태와 이모지를 보고, 최종 매수와 매도는 사용자가 직접 판단합니다.
         </p>
       </section>
 
       <section class="grid lg:grid-cols-[1.1fr_0.9fr] gap-6 mb-8">
         <article class="panel panel-primary p-6 md:p-8">
           <p class="text-teal-300 text-sm font-semibold mb-2">First Check</p>
-          <h2 class="font-display text-3xl font-bold mb-4">처음에는 Active Watches부터 보십시오</h2>
+          <h2 class="font-display text-3xl font-bold mb-4">처음에는 이모지 상태부터 보십시오</h2>
           <p class="text-gray-400 leading-relaxed">
-            Ranking은 후보군이고, Active Watches는 AI가 실제로 관찰 단계에 올린 종목입니다. 처음 접속한 사용자는 바로 매수 종목을 찾기보다 🌱, 🔍, 🎯, 💰 상태 아이콘을 보며 관찰 중인 종목의 상태, 가격, 점수, 텔레그램 알람을 함께 확인하는 흐름이 맞습니다.
+            종목명보다 먼저 볼 것은 상태 이모지입니다. 🌱와 🔍은 관찰 단계, 🎯와 💰은 매수 검토 단계, 🟢는 AI가 매수하여 현재 보유 중인 상태, ⏳은 매도 대응 단계입니다. 이 상태를 기준으로 현재가, 점수, 순위, 텔레그램 알림을 함께 확인하십시오.
           </p>
           <a href="http://3.37.70.86:3000/ranking" class="action-button action-primary w-full mt-8">
             라이브 화면으로 입장
@@ -353,11 +353,11 @@
           <div class="space-y-5">
             <div class="info-row">
               <span class="step-dot">1</span>
-              <span><strong class="text-white">AI가 후보를 선별</strong><br>랭킹과 관찰 종목으로 시장 흐름을 좁혀 보여줍니다.</span>
+              <span><strong class="text-white">AI가 후보를 압축</strong><br>관심 순위와 관찰 종목으로 시장 흐름을 좁혀 보여줍니다.</span>
             </div>
             <div class="info-row">
               <span class="step-dot">2</span>
-              <span><strong class="text-white">텔레그램 알람 수신</strong><br>등록된 텔레그램으로 주요 신호가 전송됩니다.</span>
+              <span><strong class="text-white">상태 이모지 확인</strong><br>관찰, 매수 검토, 보유, 매도 대응 단계를 구분합니다.</span>
             </div>
             <div class="info-row">
               <span class="step-dot">3</span>
@@ -371,7 +371,7 @@
         <article class="panel p-5">
           <div class="flex items-center gap-3 mb-3">
             <span class="emoji-badge">📊</span>
-            <div class="text-sm font-bold text-cyan-300">Ranking</div>
+            <div class="text-sm font-bold text-cyan-300">AI가 관심중인 순위</div>
           </div>
           <h3 class="font-bold text-lg mb-2">관찰 후보군</h3>
           <p class="text-gray-400 text-sm leading-relaxed">AI가 강하게 보고 있는 후보 목록입니다. 바로 매수하라는 뜻이 아니라 관찰 시작점입니다.</p>
@@ -379,18 +379,18 @@
         <article class="panel p-5">
           <div class="flex items-center gap-3 mb-3">
             <span class="emoji-badge">🔍</span>
-            <div class="text-sm font-bold text-[#D4AF37]">Active Watches</div>
+            <div class="text-sm font-bold text-[#D4AF37]">매수 대기 및 관심 종목</div>
           </div>
           <h3 class="font-bold text-lg mb-2">가장 먼저 볼 영역</h3>
           <p class="text-gray-400 text-sm leading-relaxed">AI가 조건을 계속 추적하는 종목입니다. 🌱 등록, 🔍 저점 추적, 🎯 매수 검토, 💰 매수 대기 상태를 봅니다.</p>
         </article>
         <article class="panel p-5">
           <div class="flex items-center gap-3 mb-3">
-            <span class="emoji-badge">💼</span>
-            <div class="text-sm font-bold text-sky-300">Positions</div>
+            <span class="emoji-badge">🟢</span>
+            <div class="text-sm font-bold text-emerald-300">AI가 현재보유중인 종목</div>
           </div>
           <h3 class="font-bold text-lg mb-2">보유 상태 확인</h3>
-          <p class="text-gray-400 text-sm leading-relaxed">현재 보유 중인 종목과 진입가, 고가 기준 흐름을 확인하는 영역입니다. 보유 관찰은 💼로 표시됩니다.</p>
+          <p class="text-gray-400 text-sm leading-relaxed">AI가 매수하여 현재 보유 중인 종목입니다. 🟢 HELD가 사라지면 AI가 매도했거나 청산 흐름이 끝난 상태로 보고 조심해야 합니다.</p>
         </article>
         <article class="panel p-5">
           <div class="flex items-center gap-3 mb-3">
@@ -408,39 +408,39 @@
             <p class="text-teal-300 text-sm font-semibold mb-2">Status Map</p>
             <h2 class="font-display text-3xl font-bold mb-4">상태를 이렇게 해석하십시오</h2>
             <p class="text-gray-400 leading-relaxed">
-              상태는 매수 지시가 아니라, AI가 종목을 어느 단계로 보고 있는지 알려주는 신호입니다.
+              상태는 매수 지시가 아니라, AI가 종목을 어느 단계로 보고 있는지 알려주는 화면 신호입니다. 특히 🟢 HELD는 AI 기준 보유 상태이므로 사라지는 순간을 주의해서 봐야 합니다.
             </p>
           </div>
           <div class="grid sm:grid-cols-2 gap-3">
             <div class="signal-card">
               <span class="status-pill mb-3">🌱 SEEDED</span>
               <h3 class="font-bold mb-1">관찰 등록</h3>
-              <p class="text-gray-400 text-sm leading-relaxed">랭킹에서 조건을 만족해 관찰 대상으로 올라온 상태입니다.</p>
+              <p class="text-gray-400 text-sm leading-relaxed">AI가 조건을 보고 관찰 대상으로 올린 초기 상태입니다. 바로 매수보다 순위, 점수, 등락률, 거래대금을 확인합니다.</p>
             </div>
             <div class="signal-card">
               <span class="status-pill mb-3">🔍 LOW_TRACKING</span>
               <h3 class="font-bold mb-1">저점 추적</h3>
-              <p class="text-gray-400 text-sm leading-relaxed">바로 추격하지 않고 눌림과 반등 조건을 확인하는 단계입니다.</p>
+              <p class="text-gray-400 text-sm leading-relaxed">추격 매수를 피하고 눌림이나 저점 흐름을 추적하는 상태입니다. 가격이 무너지지 않고 다시 힘을 받는지 봅니다.</p>
             </div>
             <div class="signal-card">
               <span class="status-pill mb-3">🎯 TRIGGER_READY</span>
               <h3 class="font-bold mb-1">매수 검토 구간</h3>
-              <p class="text-gray-400 text-sm leading-relaxed">AI 조건이 강해진 상태입니다. 알람과 현재가 흐름을 함께 보고 직접 판단합니다.</p>
+              <p class="text-gray-400 text-sm leading-relaxed">매수 조건에 가까워진 강한 관찰 상태입니다. 텔레그램 알림, 현재가, 순위 유지 여부를 함께 확인합니다.</p>
             </div>
             <div class="signal-card">
               <span class="status-pill mb-3">💰 BUY_PENDING</span>
               <h3 class="font-bold mb-1">매수 대기</h3>
-              <p class="text-gray-400 text-sm leading-relaxed">매수 조건이 강해져 주문 또는 사용자 확인 대기 흐름으로 들어간 상태입니다.</p>
+              <p class="text-gray-400 text-sm leading-relaxed">매수 조건이 강해져 매수 대기 흐름에 들어간 상태입니다. 사용자는 증권사 앱에서 최종 매수 여부를 직접 판단합니다.</p>
             </div>
             <div class="signal-card">
-              <span class="status-pill mb-3">💼 HELD</span>
-              <h3 class="font-bold mb-1">보유 관찰</h3>
-              <p class="text-gray-400 text-sm leading-relaxed">이미 보유 중인 종목의 고가, 수익률, 청산 흐름을 확인하는 상태입니다.</p>
+              <span class="status-pill mb-3">🟢 HELD</span>
+              <h3 class="font-bold mb-1">AI 보유 중</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">AI가 매수하여 현재 보유 중인 종목입니다. 🟢 HELD가 사라지면 AI가 매도했거나 보유 해제가 끝난 상태로 보고 특히 조심합니다.</p>
             </div>
             <div class="signal-card">
               <span class="status-pill mb-3">⏳ EXIT_PENDING</span>
               <h3 class="font-bold mb-1">보유 또는 청산 관찰</h3>
-              <p class="text-gray-400 text-sm leading-relaxed">청산 조건을 확인하거나 청산 흐름이 진행 중인 상태입니다.</p>
+              <p class="text-gray-400 text-sm leading-relaxed">청산 조건 또는 매도 대기 흐름을 확인하는 상태입니다. 손절, 익절, 고점 이탈 여부를 먼저 봅니다.</p>
             </div>
           </div>
         </div>
@@ -448,12 +448,36 @@
 
       <section class="grid lg:grid-cols-[0.9fr_1.1fr] gap-6 mb-8">
         <article class="panel p-6 md:p-8">
-          <h2 class="font-display text-2xl font-bold text-[#D4AF37] mb-5">직접매매 판단 순서</h2>
+          <h2 class="font-display text-2xl font-bold text-[#D4AF37] mb-5">장중 직접매매 순서</h2>
           <ol class="space-y-4 text-gray-300 leading-relaxed">
-            <li><strong class="text-white">1. 🔍 Active Watches 확인</strong><br>관찰 중인 종목과 상태를 먼저 봅니다.</li>
-            <li><strong class="text-white">2. 🎯 텔레그램 알람 확인</strong><br>AI 알람이 온 종목인지 확인합니다.</li>
-            <li><strong class="text-white">3. 📊 Ranking과 가격 흐름 비교</strong><br>랭킹, 점수, 현재가 흐름이 같은 방향인지 봅니다.</li>
-            <li><strong class="text-white">4. 🔵 증권사 앱에서 직접 주문</strong><br>최종 매수와 매도는 사용자가 직접 실행합니다. 매도 기록은 🔴로 구분됩니다.</li>
+            <li><strong class="text-white">1. 상단 요약 확인</strong><br>실시간 상태, 일일 수익률, 보유/관심/추적 수, 토큰 만료를 먼저 봅니다.</li>
+            <li><strong class="text-white">2. 📊 AI가 관심중인 순위 확인</strong><br>시장 후보군을 넓게 확인하되, 이 목록만 보고 바로 매수하지 않습니다.</li>
+            <li><strong class="text-white">3. 이모지 상태 확인</strong><br>🌱와 🔍은 관찰, 🎯와 💰은 매수 검토 단계로 구분합니다.</li>
+            <li><strong class="text-white">4. 텔레그램과 현재가 확인</strong><br>알림, 점수, 순위 유지, 현재가 추격 여부가 같은 방향인지 봅니다.</li>
+            <li><strong class="text-white">5. 증권사 앱에서 직접 주문</strong><br>최종 매수와 매도는 사용자가 직접 판단하고 실행합니다.</li>
+          </ol>
+        </article>
+
+        <article class="panel p-6 md:p-8 border-[#D4AF37]/30">
+          <h2 class="font-display text-2xl font-bold mb-5">보유 종목 대응</h2>
+          <ol class="space-y-4 text-gray-300 leading-relaxed">
+            <li><strong class="text-white">1. 🟢 HELD 확인</strong><br>🟢 HELD는 AI가 매수하여 아직 보유 중이라는 뜻입니다.</li>
+            <li><strong class="text-white">2. 사라진 HELD 주의</strong><br>🟢 HELD가 사라지면 AI가 매도했거나 청산 흐름이 끝난 상태로 보고 보유 지속 여부를 다시 판단합니다.</li>
+            <li><strong class="text-white">3. ⏳ EXIT_PENDING 우선 확인</strong><br>매도 검토 우선 상태로 보고 손절, 익절, 고점 이탈 여부를 먼저 확인합니다.</li>
+            <li><strong class="text-white">4. 오늘 주문 확인</strong><br>실제 매수/매도 기록이 남았는지 시간순으로 확인합니다.</li>
+          </ol>
+        </article>
+      </section>
+
+      <section class="grid lg:grid-cols-[1.05fr_0.95fr] gap-6 mb-8">
+        <article class="panel p-6 md:p-8">
+          <h2 class="font-display text-2xl font-bold text-[#D4AF37] mb-5">종가베팅/스윙 후보 확인</h2>
+          <ol class="space-y-4 text-gray-300 leading-relaxed">
+            <li><strong class="text-white">1. 단기 관심 종목 확인</strong><br>장중 매수 판단과 분리해서 종베 후보 영역을 별도로 봅니다.</li>
+            <li><strong class="text-white">2. 14:20 1차와 15:20 최종 구분</strong><br>1차 후보와 최종 후보는 의미가 다르므로 시간을 함께 확인합니다.</li>
+            <li><strong class="text-white">3. 종베 후보 확인</strong><br>당일 종가베팅 또는 다음 거래일 스윙 관심 후보로 봅니다.</li>
+            <li><strong class="text-white">4. 섹터 동반 확인</strong><br>오늘의 섹터와 현재 강한 섹터군이 후보 종목과 같은 방향인지 봅니다.</li>
+            <li><strong class="text-white">5. 최종 직접 판단</strong><br>섹터 동반 강세, 순위 유지, 가격 흐름이 함께 맞는 종목을 우선 검토합니다.</li>
           </ol>
         </article>
 
@@ -461,8 +485,9 @@
           <h2 class="font-display text-2xl font-bold mb-5">주의사항</h2>
           <div class="space-y-4 text-gray-300 leading-relaxed">
             <p>Pro 화면은 자동주문 기능이 아닙니다. 계좌번호, API 키, 비밀키를 입력하지 않습니다.</p>
-            <p>AI 알람은 매수 지시가 아니라 사용자가 검토할 수 있는 신호입니다. 최종 판단과 주문 실행은 사용자 책임으로 이루어집니다.</p>
-            <p>Max 자동매매 기능은 투자일임업 등 관련 법률 검토와 필요한 등록 절차가 끝난 뒤 제공될 예정입니다.</p>
+            <p>AI 상태와 알림은 매수/매도 지시가 아니라 사용자가 검토할 수 있는 신호입니다.</p>
+            <p>🌱, 🔍 상태에서 성급하게 추격 매수하면 안 됩니다. 🎯, 💰 상태도 무조건 매수가 아니라 최종 확인 단계입니다.</p>
+            <p>🟢 HELD가 사라지면 AI가 매도했거나 청산 흐름이 끝난 상태로 보고 특히 조심해야 합니다.</p>
           </div>
         </article>
       </section>
@@ -471,7 +496,7 @@
         <div class="grid lg:grid-cols-[1fr_auto] gap-6 items-center">
           <div>
             <h2 class="font-display text-2xl md:text-3xl font-bold mb-3">이제 라이브 화면으로 이동합니다</h2>
-            <p class="text-gray-400 leading-relaxed">처음에는 Ranking보다 Active Watches와 텔레그램 알람을 중심으로 확인하십시오.</p>
+            <p class="text-gray-400 leading-relaxed">처음에는 종목명보다 이모지 상태를 먼저 보고, 현재가와 텔레그램 알림을 함께 확인하십시오.</p>
           </div>
           <a href="http://3.37.70.86:3000/ranking" class="action-button action-primary px-7">
             라이브 화면으로 입장
